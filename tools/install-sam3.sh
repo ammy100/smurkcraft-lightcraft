@@ -1,10 +1,10 @@
 #!/bin/sh
-# Install the SAM 3 model for LightCraft's Object and Describe masks (see docs/ai-masks.md).
+# Install the SAM 3 model for Smurkcraft's Object and Describe masks (see docs/ai-masks.md).
 #
 # The desktop app offers to download the model itself when an AI mask first needs it; this script
 # is for developers (reference tests, benchmarks) and for installing from Hugging Face directly.
 #
-# The weights are not part of LightCraft: they are Meta's facebook/sam3 checkpoint on Hugging
+# The weights are not part of Smurkcraft: they are Meta's facebook/sam3 checkpoint on Hugging
 # Face, under the SAM License. Access is gated: open https://huggingface.co/facebook/sam3, accept
 # the license, wait for approval, then run this with a token that can read it:
 #
@@ -14,7 +14,7 @@
 # interrupted, and the 3.4 GB weights are checked against the official SHA-256.
 #
 # Options:
-#     --dir DIR     where to install (default: the folder LightCraft looks in; or LIGHTCRAFT_SAM3_DIR)
+#     --dir DIR     where to install (default: the folder Smurkcraft looks in; or LIGHTCRAFT_SAM3_DIR)
 #     --repo NAME   another Hugging Face repo with the same files (default: facebook/sam3)
 #     --check       only verify an existing installation
 set -eu
@@ -127,4 +127,4 @@ else
 fi
 
 verify
-echo "Restart LightCraft; Object and Describe in the Masking panel now use it."
+echo "Restart Smurkcraft; Object and Describe in the Masking panel now use it."

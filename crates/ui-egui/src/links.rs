@@ -7,7 +7,7 @@ pub const DISCORD: &str = "https://discord.gg/artcraft";
 /// The ArtCraft website.
 pub const WEBSITE: &str = "https://getartcraft.com";
 /// This app's page on the ArtCraft website.
-pub const APP_PAGE: &str = "https://getartcraft.com/apps/lightcraft";
+pub const APP_PAGE: &str = "https://getartcraft.com/apps/smurkcraft-lightcraft";
 /// This app's source repository.
 pub const GITHUB: &str = "https://github.com/storytold/lightcraft";
 
@@ -16,10 +16,10 @@ pub const GITHUB: &str = "https://github.com/storytold/lightcraft";
 pub const HELP: &str = "https://github.com/storytold/lightcraft/tree/main/docs";
 
 pub const LINKS: &[(&str, &str, &str)] = &[
-    ("app.help", "LightCraft Help", HELP),
+    ("app.help", "Smurkcraft Help", HELP),
     ("app.discord", "Join the ArtCraft Discord…", DISCORD),
-    ("app.website", "LightCraft Website", APP_PAGE),
-    ("app.github", "LightCraft on GitHub", GITHUB),
+    ("app.website", "Smurkcraft Website", APP_PAGE),
+    ("app.github", "Smurkcraft on GitHub", GITHUB),
     ("app.artcraft", "ArtCraft Website", WEBSITE),
     ("app.feedback", "Send Feedback…", FEEDBACK),
 ];

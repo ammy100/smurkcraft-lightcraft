@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Build, sign and (optionally) notarize the macOS release artifacts:
 #
-#   $DIST/lightcraft-<version>-macos-<arch>.dmg          LightCraft.app on a drag-to-Applications DMG
-#   $DIST/lightcraft-cli-<version>-macos-<arch>.zip      the headless CLI
+#   $DIST/smurkcraft-lightcraft-<version>-macos-<arch>.dmg          Smurkcraft.app on a drag-to-Applications DMG
+#   $DIST/smurkcraft-cli-<version>-macos-<arch>.zip      the headless CLI
 #
 # Usage: packaging/macos/package.sh [--arch universal|aarch64|x86_64] [--skip-build]
 #
@@ -39,9 +39,9 @@ export MACOSX_DEPLOYMENT_TARGET=11.0
 IDENTITY="${MACOS_SIGN_IDENTITY:--}"
 SHORT_VERSION="${VERSION%%-*}"
 WORK="$CARGO_TARGET_DIR/macos-package"
-APP="$WORK/LightCraft.app"
-DMG="$DIST/lightcraft-$VERSION-macos-$ARCH.dmg"
-CLI_ZIP="$DIST/lightcraft-cli-$VERSION-macos-$ARCH.zip"
+APP="$WORK/Smurkcraft.app"
+DMG="$DIST/smurkcraft-lightcraft-$VERSION-macos-$ARCH.dmg"
+CLI_ZIP="$DIST/smurkcraft-cli-$VERSION-macos-$ARCH.zip"
 
 NOTARIZE=0
 if [ "$IDENTITY" = "-" ]; then
@@ -52,18 +52,18 @@ else
   warn "macOS: APPLE_ID / APPLE_PASSWORD / APPLE_TEAM_ID incomplete; signed but not notarized"
 fi
 
-echo "==> LightCraft $VERSION for macOS ($ARCH), identity: $IDENTITY, notarize: $NOTARIZE"
+echo "==> Smurkcraft $VERSION for macOS ($ARCH), identity: $IDENTITY, notarize: $NOTARIZE"
 
 # ---- build -------------------------------------------------------------------------------------
 if [ "$SKIP_BUILD" = 0 ]; then
   args=()
   for t in "${TARGETS[@]}"; do args+=(--target "$t"); done
-  (cd "$ROOT" && cargo build --release --locked -p lightcraft -p lightcraft-cli --features lightcraft/heif,lightcraft-cli/heif "${args[@]}")
+  (cd "$ROOT" && cargo build --release --locked -p smurkcraft -p smurkcraft-cli --features smurkcraft/heif,smurkcraft-cli/heif "${args[@]}")
 fi
 
 rm -rf "$WORK"
 mkdir -p "$WORK/bin"
-for bin in lightcraft lightcraft-cli; do
+for bin in smurkcraft-lightcraft smurkcraft-cli; do
   inputs=()
   for t in "${TARGETS[@]}"; do inputs+=("$CARGO_TARGET_DIR/$t/release/$bin"); done
   lipo -create -output "$WORK/bin/$bin" "${inputs[@]}"
@@ -97,12 +97,12 @@ notarize() {
   fi
 }
 
-# ---- LightCraft.app ----------------------------------------------------------------------------
+# ---- Smurkcraft.app ----------------------------------------------------------------------------
 echo "==> assembling $APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Executable and icon carry the display name (CFBundleExecutable / CFBundleIconFile).
-cp "$WORK/bin/lightcraft" "$APP/Contents/MacOS/LightCraft"
-cp "$ROOT/assets/app-icon/lightcraft.icns" "$APP/Contents/Resources/LightCraft.icns"
+cp "$WORK/bin/smurkcraft-lightcraft" "$APP/Contents/MacOS/Smurkcraft"
+cp "$ROOT/assets/app-icon/smurkcraft.icns" "$APP/Contents/Resources/Smurkcraft.icns"
 sed -e "s/@VERSION@/$VERSION/g" -e "s/@SHORT_VERSION@/$SHORT_VERSION/g" \
   -e "s/@BUILD_SHA@/${LIGHTCRAFT_BUILD_SHA:-unknown}/g" \
   "$HERE/Info.plist.in" >"$APP/Contents/Info.plist"
@@ -118,13 +118,13 @@ xattr -cr "$APP"
 
 # Sign inside-out: nested code first, then the bundle itself (no --deep on the final signature).
 # Today the only nested code is the main executable; frameworks/helpers would be signed here too.
-sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP/Contents/MacOS/LightCraft"
+sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP/Contents/MacOS/Smurkcraft"
 sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP"
 codesign --verify --strict --deep --verbose=2 "$APP"
 
 if [ "$NOTARIZE" = 1 ]; then
-  ditto -c -k --keepParent "$APP" "$WORK/LightCraft-notarize.zip"
-  notarize "$WORK/LightCraft-notarize.zip"
+  ditto -c -k --keepParent "$APP" "$WORK/Smurkcraft-notarize.zip"
+  notarize "$WORK/Smurkcraft-notarize.zip"
   xcrun stapler staple "$APP"
   xcrun stapler validate "$APP"
   spctl --assess --type execute -vvv "$APP"
@@ -134,7 +134,7 @@ fi
 echo "==> building $DMG"
 STAGE="$WORK/dmg"
 mkdir -p "$STAGE"
-ditto "$APP" "$STAGE/LightCraft.app"
+ditto "$APP" "$STAGE/Smurkcraft.app"
 ln -s /Applications "$STAGE/Applications"
 # Finder window layout: background, icon size and positions (packaging/macos/dmg/README.md).
 mkdir -p "$STAGE/.background"
@@ -158,7 +158,7 @@ hdiutil_retry() {
     sleep $((attempt * 10))
   done
 }
-hdiutil_retry create -srcfolder "$STAGE" -volname "LightCraft" -fs HFS+ -format UDZO \
+hdiutil_retry create -srcfolder "$STAGE" -volname "Smurkcraft" -fs HFS+ -format UDZO \
   -imagekey zlib-level=9 -ov "$DMG"
 sign "$DMG"
 codesign --verify --strict --verbose=2 "$DMG"
@@ -173,21 +173,21 @@ verify_dmg_app() {
     hdiutil detach "$mount" >/dev/null 2>&1 || true
     return 1
   fi
-  echo "==> strict codesign of LightCraft.app in finished DMG"
-  codesign --verify --deep --strict --verbose=2 "$mount/LightCraft.app" || rc=1
+  echo "==> strict codesign of Smurkcraft.app in finished DMG"
+  codesign --verify --deep --strict --verbose=2 "$mount/Smurkcraft.app" || rc=1
   if [ "$rc" = 0 ]; then
-    ditto "$mount/LightCraft.app" "$copy/LightCraft.app" || rc=1
+    ditto "$mount/Smurkcraft.app" "$copy/Smurkcraft.app" || rc=1
   fi
   if [ "$rc" = 0 ]; then
-    echo "==> strict codesign of LightCraft.app after ditto install-copy"
-    codesign --verify --deep --strict --verbose=2 "$copy/LightCraft.app" || rc=1
+    echo "==> strict codesign of Smurkcraft.app after ditto install-copy"
+    codesign --verify --deep --strict --verbose=2 "$copy/Smurkcraft.app" || rc=1
   fi
   if [ "$rc" = 0 ] && [ "$NOTARIZE" = 1 ]; then
-    spctl --assess --type execute -vvv "$copy/LightCraft.app" || rc=1
+    spctl --assess --type execute -vvv "$copy/Smurkcraft.app" || rc=1
   fi
   if [ "$rc" != 0 ]; then
     echo "error: published-image app verification failed; reject $DMG" >&2
-    xattr -lr "$mount/LightCraft.app" >&2 || true
+    xattr -lr "$mount/Smurkcraft.app" >&2 || true
   fi
   if ! hdiutil_retry detach "$mount" >/dev/null; then
     echo "error: could not detach verification mount" >&2
@@ -206,20 +206,20 @@ fi
 
 # ---- CLI ---------------------------------------------------------------------------------------
 echo "==> building $CLI_ZIP"
-CLI_DIR="$WORK/lightcraft-cli-$VERSION-macos-$ARCH"
+CLI_DIR="$WORK/smurkcraft-cli-$VERSION-macos-$ARCH"
 mkdir -p "$CLI_DIR"
-cp "$WORK/bin/lightcraft-cli" "$CLI_DIR/"
+cp "$WORK/bin/smurkcraft-cli" "$CLI_DIR/"
 copy_docs "$CLI_DIR"
 # Same entitlements as the app: `--opt addToPhotos=true` / `app.export {addToPhotos}` send Apple
 # Events to Photos through osascript too (macOS asks about the app that started the CLI, usually
 # the terminal).
-sign --options runtime --entitlements "$HERE/entitlements.plist" "$CLI_DIR/lightcraft-cli"
-codesign --verify --strict --verbose=2 "$CLI_DIR/lightcraft-cli"
+sign --options runtime --entitlements "$HERE/entitlements.plist" "$CLI_DIR/smurkcraft-cli"
+codesign --verify --strict --verbose=2 "$CLI_DIR/smurkcraft-cli"
 rm -f "$CLI_ZIP"
 ditto -c -k --keepParent "$CLI_DIR" "$CLI_ZIP"
 # A bare Mach-O can't carry a stapled ticket; Gatekeeper looks the notarization up online.
 if [ "$NOTARIZE" = 1 ]; then notarize "$CLI_ZIP"; fi
 
-"$WORK/bin/lightcraft-cli" --version
+"$WORK/bin/smurkcraft-cli" --version
 echo "==> done"
 ls -lh "$DMG" "$CLI_ZIP"

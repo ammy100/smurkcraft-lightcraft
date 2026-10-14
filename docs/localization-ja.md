@@ -1,6 +1,6 @@
-# LightCraft 日本語表示
+# Smurkcraft 日本語表示
 
-LightCraft は日本語・簡体字中国語・英語（English）の表示に対応しています。
+Smurkcraft は日本語・簡体字中国語・英語（English）の表示に対応しています。
 言語設定は `ui.json` の `language` に保存します。
 
 - 「編集 → 言語」または「設定 → 一般 → 言語」で切り替えます。選択は次回起動にも引き継ぎます。
@@ -22,7 +22,7 @@ LightCraft は日本語・簡体字中国語・英語（English）の表示に�
 可変文言の訳文はすべてビルド時にRustの `format!` 検査を受けます。値は名前（`{n}`）または
 位置（`{0}`、`{1}`）で参照し、`{:.1}` などの書式指定は英文と同じものを使います。
 英語の単複数語尾を日本語で省略する場合、対応する文字列引数は `{:.0}` で空にします。
-`LIGHTCRAFT_LANGUAGE=ja lightcraft-cli snapshot ...` で日本語の画面を描画できます。
+`LIGHTCRAFT_LANGUAGE=ja smurkcraft-cli snapshot ...` で日本語の画面を描画できます。
 
 スマートアルバムの「はい／いいえ」で答える条件（編集、切り抜きなど）の値は、文脈付きキー
 `"smart album value|Yes"`・`"smart album value|No"` で「あり／なし」と表示します。共有の

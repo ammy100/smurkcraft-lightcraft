@@ -1,6 +1,6 @@
-# LightCraft em português do Brasil
+# Smurkcraft em português do Brasil
 
-O LightCraft pode ser exibido em inglês, chinês simplificado, chinês tradicional (Taiwan), japonês e
+O Smurkcraft pode ser exibido em inglês, chinês simplificado, chinês tradicional (Taiwan), japonês e
 português do Brasil. A preferência de idioma é gravada em `language` no `ui.json`.
 
 - Troque em **Editar → Idioma** ou em **Configurações → Geral → Idioma**. A escolha é mantida nas
@@ -32,5 +32,5 @@ verificadas por `cargo test -p lightcraft-ui-egui i18n::tests` (a checagem de gl
 `CRAFT_FONTS_DIR`). Para visualizar o idioma, renderize sem interface gráfica:
 
 ```sh
-LIGHTCRAFT_LANGUAGE=pt-br lightcraft-cli snapshot --demo --script tour.jsonl -o out.png --size 1600x1000
+LIGHTCRAFT_LANGUAGE=pt-br smurkcraft-cli snapshot --demo --script tour.jsonl -o out.png --size 1600x1000
 ```

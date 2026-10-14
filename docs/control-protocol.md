@@ -1,6 +1,6 @@
 # Control protocol
 
-`lightcraft --control 7980` (or `LIGHTCRAFT_CONTROL_PORT=7980`) starts a JSON-lines server on
+`smurkcraft-lightcraft --control 7980` (or `LIGHTCRAFT_CONTROL_PORT=7980`) starts a JSON-lines server on
 `127.0.0.1:7980` (loopback only). One request per line, one reply per line, in order:
 
 ```text
@@ -14,7 +14,7 @@ if the app has not started it and draws no frame for 5 s. The reply is then `{"o
 and the app never runs that request later, so a retry doesn't do it twice. This happens on
 Wayland when the window is on a hidden workspace or minimized: the compositor sends no frame
 callbacks, so the app's loop is paused. Keep the window on screen while you drive it, or use
-headless snapshots or `lightcraft-cli mcp` without `--connect`. A request that has already started
+headless snapshots or `smurkcraft-cli mcp` without `--connect`. A request that has already started
 (a long command blocks frames) still gets the full 60 s.
 
 **Only requests are read.** Every line must be a JSON object with a string `method` (`id` and `params` are
@@ -26,7 +26,7 @@ it on that connection runs. This keeps an HTTP request (for example a web page's
 UI thread, and at most 16 connections are served at once (further ones get an error line and are closed). Clients
 that hit an error reply should reconnect. The port has no authentication, so only enable it when you need it. The MCP server's connect
 mode ([mcp.md](mcp.md)) is a thin layer over this channel. Implementation:
-`crates/ui-egui/src/control.rs` (methods) and `apps/lightcraft/src/control_server.rs` (transport).
+`crates/ui-egui/src/control.rs` (methods) and `apps/smurkcraft-lightcraft/src/control_server.rs` (transport).
 
 ## Isolated automation profiles
 
@@ -119,7 +119,7 @@ within that brush component; it is distinct from subtracting the component from 
 
 With a persistent library, every command that changes something is written to the catalog journal (fsynced) before
 it replies. If that write fails (disk full, volume gone, permissions), the command replies `ok: false` with
-`"saved in memory but not written to disk: <reason>; LightCraft will retry"`. The change itself **is** applied (and
+`"saved in memory but not written to disk: <reason>; Smurkcraft will retry"`. The change itself **is** applied (and
 undoable) and stays queued: the next command, and the app's frame loop every couple of seconds, retry the write, so
 nothing is lost once the disk is writable again — unless the app quits first. Meanwhile `ui.inspect` → `unsaved`
 is `{ops, error}` (else `null`), `library.info` reports `unsavedOps` / `unsavedError`, and the top bar's cloud icon
@@ -138,14 +138,14 @@ writes nothing. `app.openLibrary` opening a library ends it.
 
 ### Open Library on a Lightroom catalog
 
-`app.openLibrary` never makes a LightCraft library inside a Lightroom Classic catalog (issue #891): given the catalog
+`app.openLibrary` never makes a Smurkcraft library inside a Lightroom Classic catalog (issue #891): given the catalog
 folder (it holds a `*.lrcat`), one of its `*.lrdata` / `*.lrcat-data` folders or `Backups/`, the `.lrcat` itself or
 its `-wal` / `-shm` / `.lock` files, it keeps the library open now and returns `{opened: false, lightroomCatalog:
 <the .lrcat found, or null>, path}`; the window shows a dialog whose `button:dialogOk` (Import Lightroom Catalog…, or
 `ui.dialog.confirm`) runs `file.importLightroom` with that catalog (no catalog found: it asks for one) and
-`button:dialogCancel` (`ui.dialog.cancel`) does nothing. A folder that is a LightCraft library (`catalog.snap` / `catalog.log`) always
+`button:dialogCancel` (`ui.dialog.cancel`) does nothing. A folder that is a Smurkcraft library (`catalog.snap` / `catalog.log`) always
 opens as one. With no library open (the library problem window) it is an error instead. The engine refuses the same
-places (`EngineError::LightroomCatalog`, so `lightcraft-cli --library` and `mcp --library` too). `library.importLightroom
+places (`EngineError::LightroomCatalog`, so `smurkcraft-cli --library` and `mcp --library` too). `library.importLightroom
 {status: true}` reports the catalog's `path` after the task ends as well as while it runs.
 
 ## External controllers
@@ -210,11 +210,11 @@ at each read, not every intermediate change.
 The same queries and edits are available through the connected CLI:
 
 ```sh
-lightcraft-cli run --connect 127.0.0.1:7980 library.state photo.inspect develop.controls section=light
-lightcraft-cli run --connect 127.0.0.1:7980 develop.adjust control=light.exposure delta=0.1 photo.inspect
+smurkcraft-cli run --connect 127.0.0.1:7980 library.state photo.inspect develop.controls section=light
+smurkcraft-cli run --connect 127.0.0.1:7980 develop.adjust control=light.exposure delta=0.1 photo.inspect
 ```
 
-For MCP, use `lightcraft-cli mcp --connect 127.0.0.1:7980`: `run_command` reaches the commands above,
+For MCP, use `smurkcraft-cli mcp --connect 127.0.0.1:7980`: `run_command` reaches the commands above,
 `list_controls` / `set_develop` provide slider helpers, and `resources/read` polls
 `lightcraft://library`, `lightcraft://photo/active`, `lightcraft://develop/active` and
 `lightcraft://controls` ([mcp.md](mcp.md#resources)). Headless CLI/MCP mode owns a separate engine
@@ -229,15 +229,15 @@ scissor clipping as egui's GPU backends, so the image matches the window (minus 
 - **In the running app:** `{"method": "ui.screenshot", "params": {"path": "a.png", "headless": true}}`.
   The UI is drawn into an offscreen context from the app's logic tick, which keeps running when the
   window is occluded or the display sleeps/locks. Windowed screenshots fall back to this after 2 s.
-- **Without any app window:** `lightcraft-cli snapshot` runs a whole app session headlessly.
+- **Without any app window:** `smurkcraft-cli snapshot` runs a whole app session headlessly.
   Photo development also defaults to the CPU, so the initial frames do not discover a GPU adapter
   or load a graphics driver. `LIGHTCRAFT_GPU=1` does not opt snapshots back into GPU rendering.
   This applies only to the snapshot session: even `--library DIR` leaves the desktop app's saved
   `ui.json` preferences untouched. It answers the same control requests (same handler) from a JSON-lines script:
 
 ```text
-lightcraft-cli snapshot --demo -o grid.png --size 1600x1000 [--scale 2]
-lightcraft-cli snapshot --library DIR --script tour.jsonl -o shot.png
+smurkcraft-cli snapshot --demo -o grid.png --size 1600x1000 [--scale 2]
+smurkcraft-cli snapshot --library DIR --script tour.jsonl -o shot.png
 ```
 
 Headless screenshot dimensions must be finite and at least one logical point, with a finite,

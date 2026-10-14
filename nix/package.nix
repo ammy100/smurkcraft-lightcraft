@@ -1,7 +1,7 @@
-# LightCraft — the desktop app (`lightcraft`) and the CLI/MCP server (`lightcraft-cli`), built from
+# Smurkcraft — the desktop app (`smurkcraft-lightcraft`) and the CLI/MCP server (`smurkcraft-cli`), built from
 # this repository:
 #
-#   nix build          # → ./result/bin/lightcraft, ./result/bin/lightcraft-cli
+#   nix build          # → ./result/bin/smurkcraft-lightcraft, ./result/bin/smurkcraft-cli
 #
 # Kept in step with the release workflow (.github/workflows/release.yml) and packaging/env.sh:
 #   * `Cargo.lock` drives the dependencies (`cargoLock`), so there is no vendorHash to bump. The git
@@ -9,7 +9,7 @@
 #   * `CRAFT_FONTS_DIR` embeds the CJK fonts from storytold/craft-fonts (the `craft-fonts`
 #     flake input); without it everything builds and runs, but Japanese and Chinese text have no glyphs;
 #   * the desktop file, hicolor icons and AppStream metadata are the same files the .deb/.rpm ship
-#     (packaging/linux/), so `apt` and NixOS users see one identical LightCraft;
+#     (packaging/linux/), so `apt` and NixOS users see one identical Smurkcraft;
 #   * `doCheck` runs `cargo test --workspace`, what `cargo xtask ci` runs. `nix build` runs it too;
 #     `pkgs.lightcraft.overrideAttrs { doCheck = false; }` skips it for a faster, build-only install.
 #
@@ -56,7 +56,7 @@ let
   isLinux = stdenv.hostPlatform.isLinux;
 
   # AppStream id: also the desktop file name, and the icon name in share/icons/hicolor.
-  appId = "ai.storyteller.lightcraft";
+  appId = "io.github.ammy100.smurkcraft.lightcraft";
 
   # Libraries the binaries open at run time with dlopen(): nothing links them, so no RPATH points at
   # them — winit loads libwayland-client/libxkbcommon/libxcb, rfd libdbus-1, wgpu the Vulkan loader
@@ -75,21 +75,21 @@ let
     dbus
   ];
 
-  # The two native binaries. The wasm app (apps/lightcraft-web) is built by `cargo xtask web`, not
+  # The two native binaries. The wasm app (apps/smurkcraft-web) is built by `cargo xtask web`, not
   # here; xtask is tooling.
   binaries = [
-    "lightcraft"
-    "lightcraft-cli"
+    "smurkcraft-lightcraft"
+    "smurkcraft-cli"
   ];
 
   # HEIC/HEIF decoding (opt-in upstream: HEVC patents are the distributor's call), as the release builds.
   buildFeatures = [
-    "lightcraft/heif"
-    "lightcraft-cli/heif"
+    "smurkcraft/heif"
+    "smurkcraft-cli/heif"
   ];
 in
 rustPlatform.buildRustPackage {
-  pname = "lightcraft";
+  pname = "smurkcraft-lightcraft";
   inherit version;
 
   src = lib.cleanSourceWith {
@@ -114,9 +114,9 @@ rustPlatform.buildRustPackage {
   cargoBuildFlags = [
     "--locked"
     "-p"
-    "lightcraft"
+    "smurkcraft"
     "-p"
-    "lightcraft-cli"
+    "smurkcraft-cli"
   ];
 
   # `cargo xtask ci` runs `cargo test --workspace`. Tests that need what the sandbox cannot have
@@ -175,7 +175,7 @@ rustPlatform.buildRustPackage {
       --subst-var-by DATE ${buildDate}
 
     # Licences for everything embedded in the binaries: Inter, the app icon, each craft font.
-    doc=$out/share/doc/lightcraft
+    doc=$out/share/doc/smurkcraft-lightcraft
     install -Dm644 -t "$doc" \
       README.md LICENSE-MIT LICENSE-APACHE NOTICE \
       assets/ATTRIBUTION.md assets/fonts/OFL-Inter.txt
@@ -204,12 +204,12 @@ rustPlatform.buildRustPackage {
   meta = {
     description = "Photo library and non-destructive raw developer";
     longDescription = ''
-      LightCraft organises a photo library and develops raw files non-destructively: masks,
+      Smurkcraft organises a photo library and develops raw files non-destructively: masks,
       presets, colour grading, local adjustments and batch export, driven by the same command
-      layer as its UI. It ships with lightcraft-cli, a headless renderer, command runner and MCP
+      layer as its UI. It ships with smurkcraft-cli, a headless renderer, command runner and MCP
       server for AI agents.
     '';
-    homepage = "https://getartcraft.com/apps/lightcraft";
+    homepage = "https://github.com/ammy100/smurkcraft-lightcraft";
     license = with lib.licenses; [
       mit
       asl20
@@ -217,6 +217,6 @@ rustPlatform.buildRustPackage {
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
     platforms = lib.platforms.linux ++ lib.platforms.darwin;
     # `nix run` and the desktop entry both start the GUI.
-    mainProgram = "lightcraft";
+    mainProgram = "smurkcraft-lightcraft";
   };
 }

@@ -1,5 +1,5 @@
-//! `cargo xtask web`: build `apps/lightcraft-web` for wasm32 and bundle it with `wasm-bindgen`
-//! into `<target>/web-site/` (index.html + worker.js + lightcraft_web.js + lightcraft_web_bg.wasm),
+//! `cargo xtask web`: build `apps/smurkcraft-web` for wasm32 and bundle it with `wasm-bindgen`
+//! into `<target>/web-site/` (index.html + worker.js + smurkcraft_web.js + smurkcraft_web_bg.wasm),
 //! with gzip and brotli precompressed copies (`*.gz`, `*.br`) next to each file.
 //! `--serve [port]` then serves that folder with a tiny static HTTP server (std only) that sends
 //! the cross-origin isolation headers (COOP/COEP) and the precompressed files when the browser
@@ -22,12 +22,13 @@ const WEB_PROFILE: &str = "web";
 const SITE_DIR: &str = "web-site";
 const CHINESE_FONT_FILE: &str = "lightcraft_zh_hans.otf";
 const CHINESE_FONT_LICENSE_FILE: &str = "OFL-noto-sans-cjk-sc.txt";
+const SPLASH_FILE: &str = "smurkcraft-splash.png";
 
-/// Files copied from `apps/lightcraft-web/` into the bundle as they are.
+/// Files copied from `apps/smurkcraft-web/` into the bundle as they are.
 const STATIC_FILES: [&str; 2] = ["index.html", "worker.js"];
 
 /// Bundle files that get precompressed copies.
-const COMPRESSED: [&str; 4] = ["index.html", "worker.js", "lightcraft_web.js", "lightcraft_web_bg.wasm"];
+const COMPRESSED: [&str; 4] = ["index.html", "worker.js", "smurkcraft_web.js", "smurkcraft_web_bg.wasm"];
 
 /// The Noto face is shipped beside the WASM rather than embedded in it: hosts such as Cloudflare
 /// Pages cap individual files at 25 MiB, while the complete site can contain larger assets.
@@ -110,21 +111,21 @@ pub fn run(args: &[&str]) -> Result<(), String> {
     let profile = if dev { "dev" } else { WEB_PROFILE };
 
     let mut c = cargo();
-    c.args(["build", "-p", "lightcraft-web", "--lib", "--target", TARGET, "--profile", profile]);
-    step(c, &format!("cargo build -p lightcraft-web --target {TARGET} --profile {profile}"))?;
+    c.args(["build", "-p", "smurkcraft-web", "--lib", "--target", TARGET, "--profile", profile]);
+    step(c, &format!("cargo build -p smurkcraft-web --target {TARGET} --profile {profile}"))?;
 
-    let wasm = target_dir.join(TARGET).join(if dev { "debug" } else { profile }).join("lightcraft_web.wasm");
+    let wasm = target_dir.join(TARGET).join(if dev { "debug" } else { profile }).join("smurkcraft_web.wasm");
     let out = target_dir.join(SITE_DIR);
     std::fs::create_dir_all(&out).map_err(|e| format!("{}: {e}", out.display()))?;
     let mut b = Command::new("wasm-bindgen");
-    b.arg(&wasm).args(["--target", "web", "--no-typescript", "--out-name", "lightcraft_web", "--out-dir"]).arg(&out);
+    b.arg(&wasm).args(["--target", "web", "--no-typescript", "--out-name", "smurkcraft_web", "--out-dir"]).arg(&out);
     if dev {
         b.arg("--debug");
     }
     step(b, &format!("wasm-bindgen {} → {}", wasm.display(), out.display()))?;
 
     // optional size pass when binaryen is installed
-    let bg = out.join("lightcraft_web_bg.wasm");
+    let bg = out.join("smurkcraft_web_bg.wasm");
     if !dev && Command::new("wasm-opt").arg("--version").output().is_ok() {
         let mut o = Command::new("wasm-opt");
         o.args(["-O2", "--enable-bulk-memory", "--enable-nontrapping-float-to-int", "--enable-sign-ext", "--enable-mutable-globals"])
@@ -136,8 +137,9 @@ pub fn run(args: &[&str]) -> Result<(), String> {
         }
     }
     for f in STATIC_FILES {
-        std::fs::copy(root().join("apps/lightcraft-web").join(f), out.join(f)).map_err(|e| format!("copy {f}: {e}"))?;
+        std::fs::copy(root().join("apps/smurkcraft-web").join(f), out.join(f)).map_err(|e| format!("copy {f}: {e}"))?;
     }
+    std::fs::copy(root().join("assets/splash").join(SPLASH_FILE), out.join(SPLASH_FILE)).map_err(|e| format!("copy {SPLASH_FILE}: {e}"))?;
     let chinese_font = copy_chinese_font(&out)?;
 
     // precompressed copies (skipped for --dev: they'd only slow the edit loop down)
@@ -311,7 +313,7 @@ mod tests {
 
     #[test]
     fn wasm_mime() {
-        assert_eq!(mime(Path::new("a/lightcraft_web_bg.wasm")), "application/wasm");
+        assert_eq!(mime(Path::new("a/smurkcraft_web_bg.wasm")), "application/wasm");
         assert_eq!(mime(Path::new("index.html")), "text/html; charset=utf-8");
         assert_eq!(mime(Path::new("worker.js")), "text/javascript; charset=utf-8");
         assert_eq!(mime(Path::new(CHINESE_FONT_FILE)), "font/otf");

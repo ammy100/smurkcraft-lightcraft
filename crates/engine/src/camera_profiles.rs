@@ -2,7 +2,7 @@
 //!
 //! A raw file without colour matrices (Sony ARW, Nikon NEF, Fujifilm RAF) gets its look fitted to its own embedded camera
 //! JPEG (`camera_preview`), but one photo shows too little of some colours: a lime shirt covering a
-//! few dozen proxy pixels next to a hillside of foliage at the same hue. `lightcraft-cli calibrate`
+//! few dozen proxy pixels next to a hillside of foliage at the same hue. `smurkcraft-cli calibrate`
 //! pools the colour pairs of many photos per model and fits one matrix and hue/saturation/value
 //! table; photos of that model then only fit their tone and chroma curves.
 //!
@@ -22,7 +22,7 @@ const VERSION: u32 = 1;
 /// Largest profile file read (a 5 × 72 × 5 table is ~60 KB of JSON).
 const MAX_FILE: u64 = 4 << 20;
 
-/// Profiles built into LightCraft (`assets/camera-profiles/`, see `assets/ATTRIBUTION.md`):
+/// Profiles built into Smurkcraft (`assets/camera-profiles/`, see `assets/ATTRIBUTION.md`):
 /// `(model, JSON)`.
 pub const BUNDLED: &[(&str, &str)] = &[
     ("ILCE-7CR", include_str!("../../../assets/camera-profiles/ILCE-7CR.json")),
@@ -66,7 +66,7 @@ impl CameraProfile {
     }
 }
 
-/// LightCraft's configuration folder (settings, GPU marker, camera profiles); one helper for the app.
+/// Smurkcraft's configuration folder (settings, GPU marker, camera profiles); one helper for the app.
 pub use crate::config::config_dir;
 
 /// Where camera profiles are read from and written to.

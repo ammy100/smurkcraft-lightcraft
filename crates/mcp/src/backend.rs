@@ -22,7 +22,7 @@ pub trait Backend {
 /// `(completed photos, total photos, next filename)`; false stops before the next photo.
 pub type ProgressHook = Box<dyn FnMut(usize, usize, &str) -> bool + Send>;
 
-/// A running LightCraft app, reached through its loopback control port.
+/// A running Smurkcraft app, reached through its loopback control port.
 pub struct Remote {
     addr: String,
     conn: Option<(BufReader<TcpStream>, TcpStream)>,
@@ -93,7 +93,7 @@ impl Remote {
 
     fn unknown_outcome(&self, method: &str, e: &std::io::Error) -> String {
         let addr = &self.addr;
-        format!("lost the LightCraft app at {addr} after sending `{method}` ({e}); the outcome is unknown and it was not resent, check the app")
+        format!("lost the Smurkcraft app at {addr} after sending `{method}` ({e}); the outcome is unknown and it was not resent, check the app")
     }
 }
 
@@ -124,7 +124,7 @@ impl Backend for Remote {
                     if sent {
                         self.unknown_outcome(method, &e)
                     } else {
-                        format!("LightCraft app at {} is not reachable: {e} (start it with `lightcraft --control PORT`)", self.addr)
+                        format!("Smurkcraft app at {} is not reachable: {e} (start it with `smurkcraft-lightcraft --control PORT`)", self.addr)
                     }
                 })?
             }

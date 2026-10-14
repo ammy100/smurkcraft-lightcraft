@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Build and package LightCraft for Linux (<arch> is x86_64 or aarch64, or riscv64 when cross-compiling):
+# Build and package Smurkcraft for Linux (<arch> is x86_64 or aarch64, or riscv64 when cross-compiling):
 #
-#   $DIST/lightcraft-<version>-linux-<arch>.AppImage  any distro with glibc >= the build host's
-#   $DIST/lightcraft-<version>-linux-<arch>.AppImage.zsync  delta updates (needs zsyncmake)
-#   $DIST/lightcraft-<version>-linux-<arch>.deb       Debian, Ubuntu, Mint, Pop!_OS, ...
-#   $DIST/lightcraft-<version>-linux-<arch>.rpm       Fedora, openSUSE, RHEL, ...
-#   $DIST/lightcraft-<version>-linux-<arch>.tar.gz    plain FHS-style tree (bin/, share/)
+#   $DIST/smurkcraft-lightcraft-<version>-linux-<arch>.AppImage  any distro with glibc >= the build host's
+#   $DIST/smurkcraft-lightcraft-<version>-linux-<arch>.AppImage.zsync  delta updates (needs zsyncmake)
+#   $DIST/smurkcraft-lightcraft-<version>-linux-<arch>.deb       Debian, Ubuntu, Mint, Pop!_OS, ...
+#   $DIST/smurkcraft-lightcraft-<version>-linux-<arch>.rpm       Fedora, openSUSE, RHEL, ...
+#   $DIST/smurkcraft-lightcraft-<version>-linux-<arch>.tar.gz    plain FHS-style tree (bin/, share/)
 #
 # Usage: packaging/linux/package.sh [--skip-build] [--formats "appimage deb rpm tar"]
 #
@@ -19,7 +19,7 @@ set -euo pipefail
 # shellcheck source=../env.sh
 . "$(dirname "${BASH_SOURCE[0]}")/../env.sh"
 HERE="$ROOT/packaging/linux"
-APP_ID=ai.storyteller.lightcraft
+APP_ID=io.github.ammy100.smurkcraft.lightcraft
 
 SKIP_BUILD=0
 FORMATS="appimage deb rpm tar"
@@ -39,13 +39,13 @@ case "$ARCH" in
   aarch64 | arm64) ARCH=aarch64; DEB_ARCH=arm64 ;;
   *) echo "unsupported architecture $ARCH" >&2; exit 2 ;;
 esac
-export LIGHTCRAFT_MAINTAINER="${LIGHTCRAFT_MAINTAINER:-LightCraft maintainers <lightcraft@storyteller.ai>}"
-BASENAME="lightcraft-$VERSION-linux-$ARCH"
+export LIGHTCRAFT_MAINTAINER="${LIGHTCRAFT_MAINTAINER:-Smurkcraft maintainers <ammy100@users.noreply.github.com>}"
+BASENAME="smurkcraft-lightcraft-$VERSION-linux-$ARCH"
 
-echo "==> LightCraft $VERSION for Linux $ARCH ($FORMATS)"
+echo "==> Smurkcraft $VERSION for Linux $ARCH ($FORMATS)"
 
 if [ "$SKIP_BUILD" = 0 ]; then
-  (cd "$ROOT" && cargo build --release --locked -p lightcraft -p lightcraft-cli --features lightcraft/heif,lightcraft-cli/heif \
+  (cd "$ROOT" && cargo build --release --locked -p smurkcraft -p smurkcraft-cli --features smurkcraft/heif,smurkcraft-cli/heif \
     ${CROSS_TARGET:+--target "$CROSS_TARGET"})
 fi
 BIN="$CARGO_TARGET_DIR/${CROSS_TARGET:+$CROSS_TARGET/}release"
@@ -54,9 +54,9 @@ STAGE="$WORK/root"
 rm -rf "$WORK"
 
 # ---- stage an FHS tree (shared by every format) -------------------------------------------------
-install -Dm755 "$BIN/lightcraft" "$STAGE/usr/bin/lightcraft"
-install -Dm755 "$BIN/lightcraft-cli" "$STAGE/usr/bin/lightcraft-cli"
-"${CROSS_COMPILE:-}strip" "$STAGE/usr/bin/lightcraft" "$STAGE/usr/bin/lightcraft-cli" 2>/dev/null || true
+install -Dm755 "$BIN/smurkcraft-lightcraft" "$STAGE/usr/bin/smurkcraft-lightcraft"
+install -Dm755 "$BIN/smurkcraft-cli" "$STAGE/usr/bin/smurkcraft-cli"
+"${CROSS_COMPILE:-}strip" "$STAGE/usr/bin/smurkcraft-lightcraft" "$STAGE/usr/bin/smurkcraft-cli" 2>/dev/null || true
 install -Dm644 "$HERE/$APP_ID.desktop" "$STAGE/usr/share/applications/$APP_ID.desktop"
 install -Dm644 "$HERE/$APP_ID.mime.xml" "$STAGE/usr/share/mime/packages/$APP_ID.xml"
 mkdir -p "$STAGE/usr/share/metainfo"
@@ -64,8 +64,8 @@ sed -e "s/@VERSION@/$VERSION/g" -e "s/@DATE@/$LIGHTCRAFT_BUILD_DATE/g" \
   "$HERE/$APP_ID.metainfo.xml.in" >"$STAGE/usr/share/metainfo/$APP_ID.metainfo.xml"
 mkdir -p "$STAGE/usr/share/icons"
 cp -R "$ROOT/assets/app-icon/hicolor" "$STAGE/usr/share/icons/"
-mkdir -p "$STAGE/usr/share/doc/lightcraft"
-copy_docs "$STAGE/usr/share/doc/lightcraft"
+mkdir -p "$STAGE/usr/share/doc/smurkcraft-lightcraft"
+copy_docs "$STAGE/usr/share/doc/smurkcraft-lightcraft"
 
 if command -v desktop-file-validate >/dev/null; then
   desktop-file-validate "$STAGE/usr/share/applications/$APP_ID.desktop"
@@ -98,10 +98,10 @@ fi
 
 # ---- AppImage -----------------------------------------------------------------------------------
 if has appimage; then
-  APPDIR="$WORK/LightCraft.AppDir"
+  APPDIR="$WORK/Smurkcraft.AppDir"
   cp -R "$STAGE" "$APPDIR"
   mv "$APPDIR/usr/share/doc" "$WORK/doc-unused"
-  ln -s usr/bin/lightcraft "$APPDIR/AppRun"
+  ln -s usr/bin/smurkcraft-lightcraft "$APPDIR/AppRun"
   cp "$HERE/$APP_ID.desktop" "$APPDIR/$APP_ID.desktop"
   cp "$ROOT/assets/app-icon/hicolor/256x256/apps/$APP_ID.png" "$APPDIR/$APP_ID.png"
   ln -s "$APP_ID.png" "$APPDIR/.DirIcon"
@@ -125,8 +125,8 @@ if has appimage; then
   # fetch only the blocks that changed in a newer release, through the .zsync published next to
   # each AppImage on GitHub Releases. `latest` is the newest published release that is not a
   # pre-release. A fork's builds point at its own releases through GITHUB_REPOSITORY.
-  REPO="${GITHUB_REPOSITORY:-storytold/lightcraft}"
-  UPDATE_INFO="gh-releases-zsync|${REPO%%/*}|${REPO#*/}|latest|lightcraft-*-linux-$ARCH.AppImage.zsync"
+  REPO="${GITHUB_REPOSITORY:-ammy100/smurkcraft-lightcraft}"
+  UPDATE_INFO="gh-releases-zsync|${REPO%%/*}|${REPO#*/}|latest|smurkcraft-lightcraft-*-linux-$ARCH.AppImage.zsync"
   # Extract-and-run: works without FUSE (containers, CI). The output embeds the static runtime,
   # so users don't need libfuse2 either. With zsyncmake on the host (CI installs the zsync
   # package) appimagetool also writes the .zsync, into its working directory, hence the cd.
@@ -140,9 +140,9 @@ if has appimage; then
 fi
 
 if [ -z "${CROSS_TARGET:-}" ]; then
-  "$STAGE/usr/bin/lightcraft-cli" --version
+  "$STAGE/usr/bin/smurkcraft-cli" --version
 elif [ -n "${EMULATOR:-}" ]; then
-  "$EMULATOR" "$STAGE/usr/bin/lightcraft-cli" --version
+  "$EMULATOR" "$STAGE/usr/bin/smurkcraft-cli" --version
 fi
 echo "==> done"
 ls -lh "$DIST"

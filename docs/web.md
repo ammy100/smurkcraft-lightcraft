@@ -1,6 +1,6 @@
-# LightCraft in the browser
+# Smurkcraft in the browser
 
-`apps/lightcraft-web` runs the same egui UI as the desktop app (`crates/ui-egui`) in the browser,
+`apps/smurkcraft-web` runs the same egui UI as the desktop app (`crates/ui-egui`) in the browser,
 compiled to WebAssembly and drawn with WebGL2 (eframe's `glow` backend).
 
 ## Build and run locally
@@ -18,7 +18,7 @@ it's missing or a different version.
 Build, then serve:
 
 ```sh
-cargo xtask web            # → <target>/web-site/{index.html, worker.js, lightcraft_web.js, lightcraft_web_bg.wasm}
+cargo xtask web            # → <target>/web-site/{index.html, worker.js, smurkcraft_web.js, lightcraft_web_bg.wasm}
 cargo xtask web --serve    # build, then serve on http://127.0.0.1:8080/ (or `--serve 9000`)
 cargo xtask web --dev      # unoptimized build with debug info (faster to compile, slow to run)
 ```
@@ -90,7 +90,7 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
     (`lightcraft-catalog`), plus `presets.json`, `view.json`, `prefs.json` and `ui.json` (panel
     layout). The catalog `Store` is a memory mirror loaded at start-up; every change is flushed in
     the background within a frame or two, each file replaced atomically, in modification order
-    (`apps/lightcraft-web/src/files.rs`). View state and UI prefs are saved every second when they
+    (`apps/smurkcraft-web/src/files.rs`). View state and UI prefs are saved every second when they
     change (a tab can close without notice).
   - Known limitation: the browser storage has no file locks, so two tabs of the same origin open
     the same library and the last one to write a snapshot wins (the desktop app and the CLI lock
@@ -123,7 +123,7 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
   - A picked or dropped photo whose bytes can't be stored is not added (it would be gone after
     a reload); a notice says why.
   - One tab at a time: the page holds a Web Lock (`navigator.locks`, `lightcraft-library`); a
-    second tab or window shows "LightCraft is already open in another tab" instead of loading
+    second tab or window shows "Smurkcraft is already open in another tab" instead of loading
     its own copy (two copies would overwrite each other's saves). Browsers without Web Locks, or
     that refuse the lock request, aren't protected: the app starts without the guard.
   - If the stored library can't be opened, a notice says the session is temporary and nothing

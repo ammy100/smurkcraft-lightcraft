@@ -1,4 +1,4 @@
-# Hosting LightCraft for the web
+# Hosting Smurkcraft for the web
 
 > **Experimental.** The browser version keeps its library (catalog and imported photos) in the
 > browser's own storage for the site. Browsers may clear that storage (site data cleared,
@@ -6,13 +6,14 @@
 > keep their original photos elsewhere and to use **File ▸ Back Up Library…**. See
 > `docs/web.md` in the source for details.
 
-`lightcraft-web-<version>.zip` (from the GitHub release, or `packaging/web/package.sh`) holds a
-static site in `lightcraft-web-<version>/`:
+`smurkcraft-web-<version>.zip` (from the GitHub release, or `packaging/web/package.sh`) holds a
+static site in `smurkcraft-web-<version>/`:
 
 | File | What it is |
 |---|---|
 | `index.html` | The page. It loads everything through relative URLs. |
-| `lightcraft_web.js` | wasm-bindgen glue (generated, ES module) |
+| `smurkcraft-splash.png` | Still image shown while the browser app starts. |
+| `smurkcraft_web.js` | wasm-bindgen glue (generated, ES module) |
 | `lightcraft_web_bg.wasm` | The app, about 13 MB (about 3 MB with brotli) |
 | `worker.js` | Starts the render workers (each runs the same module) |
 | `lightcraft_zh_hans.otf` | Simplified Chinese UI font, included when built with `CRAFT_FONTS_DIR` |
@@ -76,7 +77,7 @@ One tab at a time can have the library open; a second tab shows a message instea
 ```html
 <iframe
   src="https://example.com/lightcraft/"
-  title="LightCraft image editor"
+  title="Smurkcraft image editor"
   style="width: 100%; height: 720px; border: 0;"
   allow="fullscreen; clipboard-read; clipboard-write"
   allowfullscreen>
@@ -97,7 +98,7 @@ One tab at a time can have the library open; a second tab shows a message instea
 
 ## Renderer and URL options
 
-LightCraft draws its UI with WebGL2 (eframe's `glow` backend) and renders photos on the CPU in
+Smurkcraft draws its UI with WebGL2 (eframe's `glow` backend) and renders photos on the CPU in
 Web Workers. A browser without WebGL2 gets a message in place of the app. URL options, also on
 an iframe `src`:
 

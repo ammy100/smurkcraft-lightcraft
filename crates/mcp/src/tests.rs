@@ -129,7 +129,7 @@ fn path_writes_never_replace_an_original() {
 }
 
 /// Issue #181: a misspelled or unreadable `app.export` param is an error through the headless
-/// backend (what `lightcraft-cli run` and the MCP `export` tool use), not a silent default.
+/// backend (what `smurkcraft-cli run` and the MCP `export` tool use), not a silent default.
 #[test]
 fn export_refuses_unknown_params_and_bad_values() {
     let mut b = Headless::demo();
@@ -161,7 +161,7 @@ fn export_tool_forwards_its_advertised_options() {
 }
 
 /// Issue #236: `app.export {addToPhotos, photosAlbum}` through the headless backend (the MCP
-/// `export` tool, `lightcraft-cli run`): the files written go to Photos and the result says how
+/// `export` tool, `smurkcraft-cli run`): the files written go to Photos and the result says how
 /// it went; where Photos isn't (not macOS), it is refused before anything is written. A fake
 /// runner replaces the real one first: tests never start osascript or Photos.
 #[test]
@@ -195,7 +195,7 @@ fn export_adds_to_apple_photos_where_there_is_photos() {
     let _ = std::fs::remove_dir_all(&base);
 }
 
-/// Review of #236: a one-shot process (`lightcraft-cli run`, an MCP server reaching EOF) must not
+/// Review of #236: a one-shot process (`smurkcraft-cli run`, an MCP server reaching EOF) must not
 /// end in the middle of an Apple Photos import, abandoning osascript and the result. The test runs
 /// itself as a child process (`LC_PHOTOS_CHILD`): the child adds a file with a fake runner that
 /// takes a while and then leaves a marker, prints the reply and ends as the CLI does (dropping
@@ -222,7 +222,7 @@ fn a_one_shot_process_never_ends_during_a_photos_import() {
         }
         let r = h.call("engine.execute", json!({"command": "export.addToPhotos", "params": p})).unwrap();
         println!("CHILD-REPLY {r}");
-        drop(h); // what lightcraft-cli does before it exits
+        drop(h); // what smurkcraft-cli does before it exits
         return;
     }
     for mode in ["default", "nowait"] {

@@ -88,7 +88,7 @@ The glyph tests are skipped without `CRAFT_FONTS_DIR` (there are no CJK faces to
 To look at a language, render it headless:
 
 ```sh
-LIGHTCRAFT_LANGUAGE=zh-hans lightcraft-cli snapshot --demo --script tour.jsonl -o out.png --size 1600x1000
+LIGHTCRAFT_LANGUAGE=zh-hans smurkcraft-cli snapshot --demo --script tour.jsonl -o out.png --size 1600x1000
 ```
 
 or, with the app running (`--control 7980`), run the language command

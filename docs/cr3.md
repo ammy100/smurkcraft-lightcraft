@@ -67,7 +67,7 @@ control. The exact inputs and reference hashes are:
 | Canon RP RAW, 1.6× crop, raw.pixls.us 4673 | `7d4ba45dc9264d598336133593c677b09774bcdf13b602ee770e72415a652a16` | `46808a9de3b3dcc7` |
 | Canon RP C-RAW, 1.6× crop, raw.pixls.us 4671 | `4a859ab137f792aedaf3416b0aad1497ebaab02052a49453902e226699154aa7` | `39a60c4efed4e1f4` |
 
-The EOS R5 Mark II files (raw.pixls.us 7881–7884, CC0) are pinned to LightCraft's own decode; no external
+The EOS R5 Mark II files (raw.pixls.us 7881–7884, CC0) are pinned to Smurkcraft's own decode; no external
 decoder was run on them:
 
 | File | Input SHA-256 | Sensor FNV-1a (u16 little-endian) |
@@ -101,7 +101,7 @@ symbol is Rice coded with a limited-length escape: a quotient of 23 or more is w
 the terminating 1 and the symbol in 8 bits. This is the escape layout of ITU-T T.87 for a 32-bit
 code-length limit and 8-bit symbols, without that standard's minus-one offset. In the R8 maps only
 the first symbol needs more than 15 leading zeros, and its bits read the same whether taken as a
-32-bit literal or as an escape after 16 zeros with a 16-bit literal (the rule LightCraft used before).
+32-bit literal or as an escape after 16 zeros with a 16-bit literal (the rule Smurkcraft used before).
 The R7 maps decoded to their exact ends under that rule, which a later long prefix would have broken;
 no R7 file was at hand to recheck them. R5 Mark II maps (QP 150–162) also jump by up to 12 where the Rice parameter is 0. That
 gives 18- to 22-zero prefixes, which the 16-zero rule misread as escapes ("Canon CRX adaptive QP value
@@ -153,7 +153,7 @@ here. The existing guarded embedded-JPEG fitting path now includes CR3, with
 both proxies oriented identically before gathering training pairs. A bounded
 crop/translation registration of the JPEG is confirmed on held-out edge
 directions before fitting colour; the existing held-out colour acceptance gates
-are unchanged. No lens distortion correction is applied (LightCraft has no lens
+are unchanged. No lens distortion correction is applied (Smurkcraft has no lens
 profiles of its own yet), so lenses whose camera JPEG is strongly
 distortion-corrected may fail the gates and keep the neutral matrix. Render
 cache version 13 invalidates earlier thumbnails. All developed pixels still come

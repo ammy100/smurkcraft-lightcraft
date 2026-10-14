@@ -15,8 +15,8 @@ All algorithms are our own implementations from published papers (cited in the m
   - `merge.hdr {ids?, align=true, deghost=none|low|medium|high, autoSettings=true, stack=false, preview=false, showOverlay=false, previewPath?}`
   - `merge.panorama {ids?, projection=auto|spherical|cylindrical|perspective, boundaryWarp=0..100, autoCrop=false, fillEdges=false, autoSettings=true, maxMegapixels=40, preview, previewPath?}`
   - `merge.hdrPanorama {ids?, bracket=0 (from EXIF), …both sets of options}`
-- **CLI:** `lightcraft-cli merge hdr|panorama|hdr-panorama [options] FILES…`;
-  `lightcraft-cli synth-merge hdr|panorama -o DIR` writes synthetic inputs (procedural scene).
+- **CLI:** `smurkcraft-cli merge hdr|panorama|hdr-panorama [options] FILES…`;
+  `smurkcraft-cli synth-merge hdr|panorama -o DIR` writes synthetic inputs (procedural scene).
 
 ## What it does
 

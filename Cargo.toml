@@ -3,11 +3,11 @@ resolver = "3"
 members = ["crates/*", "apps/*", "xtask"]
 
 [workspace.package]
-version = "0.7.1"
+version = "0.7.2"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 rust-version = "1.90"
-repository = "https://github.com/storytold/lightcraft"
+repository = "https://github.com/ammy100/smurkcraft-lightcraft"
 
 [workspace.dependencies]
 craft-ui = { git = "https://github.com/storytold/craft-libs", rev = "5c874d51eeb3de70e735c8ce87a59a7dedd47675", features = ["serde"] }
@@ -52,7 +52,7 @@ bytemuck = { version = "1", features = ["derive"] }
 crc32fast = "1"
 siphasher = "1"
 libc = "0.2" # dev-only: process CPU time in benches
-dhat = "0.3" # opt-in heap profiling (lightcraft-cli --features dhat-heap); never in default builds
+dhat = "0.3" # opt-in heap profiling (smurkcraft-cli --features dhat-heap); never in default builds
 
 # formats
 quick-xml = "0.38"
@@ -101,7 +101,7 @@ objc2-foundation = { version = "0.3", default-features = false, features = ["std
 zbus = "=5.19.0"
 web-time = "1"
 
-# web (apps/lightcraft-web)
+# web (apps/smurkcraft-web)
 wasm-bindgen = "0.2.129"
 wasm-bindgen-futures = "0.4"
 js-sys = "0.3"

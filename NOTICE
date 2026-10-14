@@ -1,11 +1,11 @@
-LightCraft
+Smurkcraft (LightCraft-derived fork)
 Copyright (c) 2026 ArtCraft Team and the LightCraft contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option
 (LICENSE-MIT, LICENSE-APACHE).
 
-The ArtCraft name, wordmark and logos in docs/brand/ are trademarks of the ArtCraft Team. They are
-not open source and are not covered by the license above; their terms are in
-docs/brand/LICENSE-brand.txt.
+Smurkcraft is an independent community-maintained rebrand of LightCraft and is not affiliated
+with or endorsed by its original maintainers. The ArtCraft trademark artwork distributed by
+upstream has been removed from this fork; no ArtCraft logo or mark is included.
 
 Third-party material
 
@@ -53,7 +53,8 @@ Builds made with craft-fonts (the optional CRAFT_FONTS_DIR build input; all offi
 also embed the fonts listed in https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md
 (the Japanese fonts BIZ UDPGothic, BIZ UDMincho and Shippori Mincho; the web build embeds only BIZ
 UDPGothic Regular), under the SIL Open Font License 1.1. Release packages include each font's
-licence as OFL-<family>.txt.
+licence; the Windows MSI consolidates notices and licence texts in LICENSES.txt, and the other
+packages include per-font OFL-<family>.txt files.
 
 Place names for reverse geocoding (Photo > Fill Location from GPS) are not part of LightCraft and
 are never distributed with it. On the user's request (Photo > Download Place Names) the app

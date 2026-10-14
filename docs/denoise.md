@@ -128,10 +128,10 @@ selected model the way the app does (the card when it can run it, checked agains
 
 ```text
 export LIGHTCRAFT_DENOISE_TOKEN='a long random string, at least 16 characters'
-lightcraft-cli denoise-serve --listen 100.101.102.103:7990          # e.g. the machine's Tailscale address
+smurkcraft-cli denoise-serve --listen 100.101.102.103:7990          # e.g. the machine's Tailscale address
 ```
 
-On the laptop, before LightCraft starts:
+On the laptop, before Smurkcraft starts:
 
 ```text
 export LIGHTCRAFT_DENOISE_URL=100.101.102.103:7990

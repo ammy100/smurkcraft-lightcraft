@@ -1,49 +1,47 @@
-# LightCraft app icon
+# Smurkcraft app icon
 
-A **lynx**, frontal head-and-shoulders portrait with an alert gaze, in the style of an engraving: the
-Crafting Apps "owl template" (full-bleed colour field, tight portrait, the figure in paper with ink line
-work and a crisp ink contour, no roundel or border).
+A **nine-tailed kitsune with a brow diamond**: an engraving portrait, seated, looking back at the
+viewer, in the original project's icon-template framing (full-bleed field, head and body filling the
+tile, tails running off the edges).
 
-## Palette (exactly three colours)
+## Palette
+
+Exactly three colours:
 
 | Colour | Hex | Used for |
 |---|---|---|
-| Ink | `#0b0b0c` | line work and the contour |
-| Paper | `#efe9dc` | the figure (the lynx) |
-| LightCraft amber | `#f2a516` | the full-bleed field (the app colour) |
+| Ink | `#0b0b0c` | line work and contours |
+| Paper | `#efe9dc` | the figure |
+| Smurkcraft blue (app colour) | `#2f7bf5` | the full-bleed field |
 
 ## Geometry
 
-`viewBox="0 0 512 512"`, a rounded-square tile with `rx=112`, clipped; the colour fills the whole tile.
-macOS files (`.icns`, `lightcraft-macos-512.png`) add Apple's transparent margin (an 824/1024 body);
-Windows and Linux files use the full-bleed tile so the lynx reads at 16-48 px.
+A 512-unit tile (`viewBox="0 0 512 512"`), rounded square with `rx=112`, no border. The macOS
+renders pad it onto Apple's 824/1024 icon grid; the Windows and Linux renders crop 22 units off
+each side so the figure reads at 16–48 px.
 
 ## Provenance
 
-The owner's original drawing, made in ArtCraft (2880 px, keyed to the three colours), vectorised with
-craftrules `assets/logo-options/_tools/vectorize_tile.py`. The source drawing stays in craftrules at
-`assets/app-icons/lightcraft/source.png`; `lightcraft.svg` here is the canonical artwork. Licence:
-`LICENSE.txt` (MIT OR Apache-2.0, like the repo).
+This artwork was originally created for PhotoCraft by its original project owner and is reused
+under the license in `LICENSE.txt`. The source PNG is maintained in the original project's
+`craftrules` repository; this fork renames the derived icon files but does not claim authorship.
 
 ## Files
 
-| File | What |
-|---|---|
-| `lightcraft.svg` | canonical vector, traced at 2048 px (about 770 KB) |
-| `lightcraft-small.svg` | lighter vector, traced at 1024 px (about 360 KB) |
-| `lightcraft-1024.png` | 1024 px render (store listings, docs) |
-| `lightcraft-macos-512.png` | runtime window/Dock icon on macOS (embedded by `apps/lightcraft/src/main.rs`) |
-| `lightcraft.icns` | macOS bundle icon (`CFBundleIconFile`) |
-| `lightcraft.ico` | Windows icon, 16-256 px, embedded in `lightcraft.exe` by `apps/lightcraft/build.rs` |
-| `hicolor/<n>x<n>/apps/ai.storyteller.lightcraft.png` | Linux icon theme, 16-512 px; the 256 px one is also the runtime window icon on Windows and Linux |
-| `hicolor/scalable/apps/ai.storyteller.lightcraft.svg` | Linux scalable icon (the small SVG) |
+- `smurkcraft.svg`: canonical master (traced at 2048 px).
+- `smurkcraft-small.svg`: lighter trace (traced at 1024 px); also the hicolor scalable icon.
+- `smurkcraft-1024.png`: 1024 px render on the macOS grid.
+- `smurkcraft.icns`: macOS bundle icon (`CFBundleIconFile`).
+- `smurkcraft.ico`: Windows icon, 16–256 px, embedded in the `.exe` by `apps/smurkcraft-lightcraft/build.rs`.
+- `hicolor/<size>/apps/io.github.ammy100.smurkcraft.lightcraft.png` (16–512) and `hicolor/scalable/...svg`:
+  Linux icon theme.
 
-The app id is `ai.storyteller.lightcraft`: the Wayland app id, the `.desktop` file
-(`packaging/linux/ai.storyteller.lightcraft.desktop`, `Icon=ai.storyteller.lightcraft`) and the hicolor icon
-name. To install on Linux, copy `hicolor/` into `/usr/share/icons/hicolor/` (or `~/.local/share/icons/hicolor/`)
-and the `.desktop` file into `applications/`.
+The app also sets the window icon and Wayland app ID at runtime (`apps/smurkcraft-lightcraft/src/main.rs`).
+On Windows the taskbar shows the icon of the Start Menu shortcut that launches the
+exe, so the MSI's `<Icon Id>` keeps the `.exe` extension (ICE50); `app_icon.rs` documents the
+details and tests the `.ico` sizes and the WiX icon references.
 
 ## Regenerate
 
-Edit `lightcraft.svg` (or `lightcraft-small.svg`), then run `packaging/icons.sh` (needs `resvg`; `iconutil`
-on macOS for the `.icns`; the `.ico` is packed by `cargo xtask ico`). Every output is committed.
+Replace `smurkcraft.svg` (and `smurkcraft-small.svg`), then run `packaging/icons.sh`. It needs
+`resvg`, plus `iconutil` on macOS; the `.ico` is packed by `cargo xtask ico`.

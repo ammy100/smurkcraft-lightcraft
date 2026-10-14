@@ -1,10 +1,10 @@
 # AI masks (Object and Describe)
 
-LightCraft selects objects with **SAM 3** (Segment Anything with Concepts, Meta 2025), run in
+Smurkcraft selects objects with **SAM 3** (Segment Anything with Concepts, Meta 2025), run in
 pure Rust by `crates/segment` on [candle](https://github.com/huggingface/candle): on the GPU
 through Metal on macOS, on the CPU elsewhere (for now).
 
-**The model is optional.** It is not part of LightCraft, and nothing requires it: without it,
+**The model is optional.** It is not part of Smurkcraft, and nothing requires it: without it,
 Object and Describe offer to download it, every other feature (and every existing mask, see
 below) works, and no render, export or command ever waits for it.
 
@@ -53,11 +53,11 @@ cargo build --release --locked -p lightcraft-segment --bin lightcraft-sam3-worke
 target/release/lightcraft-sam3-worker "$HOME/Library/Application Support/LightCraft/models/sam3" 127.0.0.1:8793
 ```
 
-On the editing computer, start an SSH tunnel in one terminal and LightCraft in another:
+On the editing computer, start an SSH tunnel in one terminal and Smurkcraft in another:
 
 ```sh
 ssh -N -T -o ExitOnForwardFailure=yes -L 127.0.0.1:8793:127.0.0.1:8793 user@your-mac
-LIGHTCRAFT_SAM3_REMOTE=127.0.0.1:8793 lightcraft
+LIGHTCRAFT_SAM3_REMOTE=127.0.0.1:8793 smurkcraft-lightcraft
 ```
 
 Object clicks, Describe prompts, and detail refinement use the remote worker. Only the
@@ -82,11 +82,11 @@ not RAW development, denoising, or upscaling. The model licence below still appl
 
 ### In the app (recommended)
 
-The first time you pick Object or Describe without the model, LightCraft asks:
+The first time you pick Object or Describe without the model, Smurkcraft asks:
 
 > **Download the SAM 3 model?** Object and Describe masks use SAM 3, Meta's segmentation model.
-> It isn't part of LightCraft, and everything else works without it. Download it once (about
-> 3.4 GB) · *folder*. Licence: SAM License (Meta) — Meta's terms, not LightCraft's. Downloading
+> It isn't part of Smurkcraft, and everything else works without it. Download it once (about
+> 3.4 GB) · *folder*. Licence: SAM License (Meta) — Meta's terms, not Smurkcraft's. Downloading
 > it means accepting them. [Read the SAM License] — **Not Now** / **Download**
 
 Nothing is downloaded until you choose **Download**. The download runs in the background (close
@@ -95,9 +95,9 @@ where it stopped if interrupted (also after quitting), and tries the next downlo
 one fails or stalls. Each file is written as `<name>.part` and moved into the model folder only
 when complete and verified — `model.safetensors` must have the exact size and SHA-256 of Meta's
 official checkpoint; a file that doesn't match is deleted, never used. If no location works, the
-dialog says why and LightCraft carries on without the model.
+dialog says why and Smurkcraft carries on without the model.
 
-Agents and scripts use the same commands (control channel, `lightcraft-cli mcp --connect`):
+Agents and scripts use the same commands (control channel, `smurkcraft-cli mcp --connect`):
 `segment.model.status`, `segment.model.download {"acknowledged": true}` (refused without the
 explicit `acknowledged`: pass it only after the user agreed to the download and the licence),
 `segment.model.cancel`.
@@ -108,12 +108,12 @@ The model is fetched from an ordered list of mirrors: base URLs where `<base>/mo
 `<base>/vocab.json` and `<base>/merges.txt` live. The list is, in order:
 
 1. `LIGHTCRAFT_SAM3_MIRRORS` (environment variable; URLs separated by commas or spaces);
-2. the file `models/sam3-mirrors.txt` in LightCraft's settings folder (one URL per line, `#`
+2. the file `models/sam3-mirrors.txt` in Smurkcraft's settings folder (one URL per line, `#`
    comments) — `~/Library/Application Support/LightCraft/` (macOS), `%APPDATA%\LightCraft\`
    (Windows), `~/.config/lightcraft/` (Linux);
 3. the built-in list, `DEFAULT_MIRRORS` in `crates/segment/src/fetch/mod.rs`.
 
-> **Maintainers:** the built-in list is **empty** until LightCraft's own CDN locations exist
+> **Maintainers:** the built-in list is **empty** until Smurkcraft's own CDN locations exist
 > (see the `TODO(maintainer)` there): add them in order of preference, host the three files
 > unchanged, and pin `vocab.json` / `merges.txt` (size + SHA-256) in `SAM3_FILES` at the same
 > time. Until then the in-app download needs a user-configured mirror, and the dialog says so:
@@ -154,7 +154,7 @@ $env:HF_TOKEN = "hf_..."; .\tools\install-sam3.ps1   # Windows
 
 ## Licence of the model
 
-LightCraft's code is MIT OR Apache-2.0; `crates/segment` (a port of Apache-2.0 code) is
+Smurkcraft's code is MIT OR Apache-2.0; `crates/segment` (a port of Apache-2.0 code) is
 Apache-2.0. **The SAM 3 weights are neither**: they are Meta's, released under the **SAM
 License** (<https://github.com/facebookresearch/sam3/blob/main/LICENSE>), a custom licence that
 is not an OSI open-source licence. It grants a non-exclusive, worldwide, non-transferable,
@@ -194,7 +194,7 @@ Therefore:
 `download` is `{running, done, total, file, error, cancelled, finished}`: `cancelled` is true when the last
 download was cancelled (its `error` says so in words; decide on the flag). An AI mask command refused because
 the model is not installed (or still downloading) fails with an error that starts with "The SAM 3 model is
-not installed"; inside LightCraft it is `ErrorKind::ModelMissing(Sam3)`, which is what the app offers the
+not installed"; inside Smurkcraft it is `ErrorKind::ModelMissing(Sam3)`, which is what the app offers the
 download on.
 
 Coordinates are normalized to the uncropped, oriented photo, like every mask shape. `seg` passes
@@ -205,7 +205,7 @@ installed" that says how to get it.
 In the desktop app the commands don't wait for the model: `mask.objectPoint` returns
 `{pending: true}` and the selection is applied when it's computed (one undo step per settled
 selection); `mask.add {kind: "prompt"}` returns `{pending: true}` and the mask appears when
-something is found (or a message says nothing was). `lightcraft-cli` and the headless MCP server
+something is found (or a message says nothing was). `smurkcraft-cli` and the headless MCP server
 wait and return the result (when built with the `sam` feature; the default CLI has no AI masks).
 
 ## Implementation notes

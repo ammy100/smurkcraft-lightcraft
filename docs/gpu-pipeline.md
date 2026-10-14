@@ -25,9 +25,9 @@ when warped geometry rebuilds.
 wgpu loads the driver of **every** backend in an instance's set while it enumerates adapters — even
 when it then picks another one. A Vulkan driver that crashes there (issue #136: an access violation
 in Intel's `igvk64.dll` on a UHD 630 under Windows 11) takes the process down before any window
-appears, and a native crash cannot be caught. So LightCraft only lets wgpu touch the backends it
+appears, and a native crash cannot be caught. So Smurkcraft only lets wgpu touch the backends it
 means to use (`lightcraft_gpu::backend`), for its compute device *and* for the desktop window
-(eframe/egui-wgpu, `window_wgpu_options` in `apps/lightcraft/src/main.rs`):
+(eframe/egui-wgpu, `window_wgpu_options` in `apps/smurkcraft-lightcraft/src/main.rs`):
 
 | platform | default (window and compute) |
 |---|---|
@@ -46,12 +46,12 @@ Overrides (read once at launch):
 
 **DX12 shader compiler (issue #471).** Every instance (window and compute) compiles DX12 shaders with
 FXC (`d3dcompiler_47.dll`, part of Windows; `lightcraft_gpu::backend::backend_options`). wgpu's
-default, `Auto`, loads whichever `dxcompiler.dll` the DLL search path finds first. LightCraft ships
+default, `Auto`, loads whichever `dxcompiler.dll` the DLL search path finds first. Smurkcraft ships
 none, so that copy belongs to another program (a Windows SDK, a folder on `PATH`). An older copy without
 `dxil.dll` beside it (e.g. DXC 1.7) warns that the DXIL is unsigned, wgpu treats the warning as a
 compile error, its indirect-validation pipelines fail, the device is lost, and the window never opened
 (`WGPU error: Parent device is lost`). `WGPU_DX12_COMPILER=dxc | auto | fxc` (wgpu's variable) still
-chooses; with `dxc`, put `dxcompiler.dll` *and* `dxil.dll` (DXC ≥ 1.8.2502) next to `lightcraft.exe`.
+chooses; with `dxc`, put `dxcompiler.dll` *and* `dxil.dll` (DXC ≥ 1.8.2502) next to `smurkcraft-lightcraft.exe`.
 FXC builds the compute kernels somewhat slower than DXC (≈ 9 s vs 7.5 s for the GPU test suite on an
 RTX 4080), off the startup path.
 
@@ -79,7 +79,7 @@ not (issue #250: Apple's Metal compiler, `MTLCompilerService`, aborting on a ker
 Mac). A kernel the driver refuses without crashing is caught by wgpu error scopes: the log says why
 (`gpu: rendering on the CPU: …`) and renders stay on the CPU. `LIGHTCRAFT_GPU=0` (or Settings ▸
 uncheck *Use the GPU for rendering*) forces the CPU path from the start. If the marker is still there at the next launch, the process died inside
-the driver: LightCraft starts with GPU rendering off (the preference is saved unchecked), removes the
+the driver: Smurkcraft starts with GPU rendering off (the preference is saved unchecked), removes the
 marker and says so in a notice. Checking *Use the GPU for rendering* again tries the GPU once more
 (and re-arms the sentinel). Not with `LIGHTCRAFT_NO_PREFS` (tests, scripts), and not in a `--memory` session,
 which writes nothing: it neither arms the sentinel nor removes a marker it finds (it still starts with GPU
@@ -99,7 +99,7 @@ renderer last. `LIGHTCRAFT_GPU_BACKEND=dx12 | vulkan | gl | glow` (or `WGPU_BACK
 first because a broken Vulkan driver can crash the process uncatchably (#136). Compute keeps its own
 device and falls back to the CPU as before.
 
-**Troubleshooting a crash at startup (Windows).** Start LightCraft from a `.cmd` file or a terminal
+**Troubleshooting a crash at startup (Windows).** Start Smurkcraft from a `.cmd` file or a terminal
 with `set LIGHTCRAFT_GPU_BACKEND=dx12` (the default since #136), or `=off` to keep the GPU out of
 rendering; `set VK_LOADER_DRIVERS_DISABLE=*igvk64*` (Vulkan loader) hides a specific Vulkan driver
 from every program started with it. Help ▸ System Info and `app.gpu` show the adapter and backend in
@@ -112,7 +112,7 @@ walks the whole system drive while the window's GPU device is created (`D3D12Cre
 unresponsive window for minutes. The Vulkan driver shares that code, so another backend doesn't
 help. Set *Shader Cache Size* back to **Driver Default** (or any size); the setting is global, there
 is no per-program override. Other programs that create a DX12 or Vulkan device at startup hang the
-same way (PhotoCraft does). It is a driver issue: nothing in LightCraft itself
+same way (PhotoCraft does). It is a driver issue: nothing in Smurkcraft itself
 walks the drive.
 
 ## Where it is used
@@ -159,7 +159,7 @@ walks the drive.
 
 ## Limits, failures and the CPU fallback
 Issue #78: on an Intel UHD (ICL GT1) iGPU with Mesa/Vulkan, exports from the desktop app came out
-as valid JPEGs that were entirely black, while previews, `lightcraft-cli render` and
+as valid JPEGs that were entirely black, while previews, `smurkcraft-cli render` and
 `LIGHTCRAFT_GPU=0` were fine — and the GPU export took ~15 s against ~3 s on the CPU. The readback
 returned a buffer the per-pixel stage had never written, with no error. The likeliest cause: the
 whole export was recorded as one command submission lasting seconds on that GPU, and the driver
@@ -287,11 +287,11 @@ A view's stages keep an uploaded source only up to 96 MB (a Preview-level source
   sources, rendered previews) and the GPU renderer's device buffers (allocated, of which pooled
   and retired); `ui.inspect` → `memory` adds the loupe's stage caches (CPU images, GPU buffers)
   and the textures.
-- Heap profile: build `lightcraft-cli` with `--features dhat-heap`; `library.memory` then also
+- Heap profile: build `smurkcraft-cli` with `--features dhat-heap`; `library.memory` then also
   reports live/peak heap bytes and the run writes `dhat-heap.json` (`LIGHTCRAFT_DHAT_FILE`), whose
   allocation sites at the peak (`t-gmax`) show who holds the memory.
 - Measuring the scenario (import 14 raws from `corpus/raw`, open the loupe, step 12 times):
-  `/usr/bin/time -l lightcraft-cli snapshot <files> --script steps.jsonl -o out.png` → "maximum
+  `/usr/bin/time -l smurkcraft-cli snapshot <files> --script steps.jsonl -o out.png` → "maximum
   resident set size" and "peak memory footprint". Run it several times: the high-water mark is
   noisy (allocator caching, scheduling). On Apple silicon GPU buffers count in the footprint.
 - Imports read raw headers only (`lightcraft_raw::probe_info`): no pixel data is decompressed,

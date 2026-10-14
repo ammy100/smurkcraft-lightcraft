@@ -63,7 +63,7 @@ pub const TABLE: &[(&str, Class)] = &[
     ("mcp", Class::Layer(5)),
     ("testkit", Class::Testkit),
     // L6 apps and tooling
-    ("lightcraft", Class::Exempt),
+    ("smurkcraft", Class::Exempt),
     ("cli", Class::Exempt),
     ("web", Class::Exempt),
     ("xtask", Class::Exempt),
@@ -99,7 +99,7 @@ pub const UI_CRATES: &[&str] = &["craft-ui", "egui", "eframe", "winit", "egui_ki
 pub const UI_MIN_LAYER: u8 = 5;
 
 pub fn short_name(pkg: &str) -> &str {
-    pkg.strip_prefix("lightcraft-").unwrap_or(pkg)
+    pkg.strip_prefix("lightcraft-").or_else(|| pkg.strip_prefix("smurkcraft-")).unwrap_or(pkg)
 }
 
 pub fn classify(pkg: &str) -> Option<Class> {
@@ -269,7 +269,7 @@ mod tests {
             c("lightcraft-develop", &[("lightcraft-geom", Normal, true)]),
             c("lightcraft-engine", &[("lightcraft-develop", Normal, true), ("lightcraft-testkit", Dev, true)]),
             c("lightcraft-ui-egui", &[("lightcraft-engine", Normal, true), ("egui", Normal, false)]),
-            c("lightcraft-cli", &[("lightcraft-ui-egui", Normal, true)]),
+            c("smurkcraft-cli", &[("lightcraft-ui-egui", Normal, true)]),
         ];
         assert!(check(&g).is_empty(), "{:?}", check(&g));
     }
@@ -311,7 +311,7 @@ mod tests {
 
     #[test]
     fn apps_exempt() {
-        for app in ["lightcraft", "lightcraft-cli", "lightcraft-web", "xtask"] {
+        for app in ["smurkcraft", "smurkcraft-cli", "smurkcraft-web", "xtask"] {
             assert!(check(&[c(app, &[("egui", Normal, false), ("lightcraft-ui-egui", Normal, true)])]).is_empty());
         }
     }

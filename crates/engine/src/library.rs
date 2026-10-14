@@ -267,11 +267,11 @@ fn same_dir(a: &Path, b: &Path) -> bool {
     }
 }
 
-/// This program, for the lock owner note ("LightCraft", "lightcraft-cli").
+/// This program, for the lock owner note ("Smurkcraft", "smurkcraft-cli").
 fn program_name() -> String {
     let exe = std::env::current_exe().ok().and_then(|p| p.file_stem().map(|s| s.to_string_lossy().to_string()));
     match exe.as_deref() {
-        Some("lightcraft") | None => "LightCraft".into(),
+        Some("lightcraft") | None => "Smurkcraft".into(),
         Some(other) => other.to_string(),
     }
 }
@@ -296,7 +296,7 @@ impl SettingsLoad {
                 log::error!("library: {name}: {e}");
                 self.blocked.push(name);
                 self.warnings.push(format!(
-                    "{name} couldn't be read ({e}). LightCraft uses the defaults for now and won't overwrite the file; reopen the library to try again."
+                    "{name} couldn't be read ({e}). Smurkcraft uses the defaults for now and won't overwrite the file; reopen the library to try again."
                 ));
                 return None;
             }
@@ -313,7 +313,7 @@ impl SettingsLoad {
             Err(w) => {
                 self.blocked.push(name);
                 self.warnings.push(format!(
-                    "{name} is damaged ({err}) and couldn't be set aside ({w}). LightCraft uses the defaults and won't overwrite the file."
+                    "{name} is damaged ({err}) and couldn't be set aside ({w}). Smurkcraft uses the defaults and won't overwrite the file."
                 ));
             }
         }
@@ -357,7 +357,7 @@ impl Session {
     ///
     /// A Lightroom Classic catalog folder, one of its `.lrdata` / `.lrcat-data` folders or an
     /// `.lrcat` file is refused with [`EngineError::LightroomCatalog`] before anything is
-    /// created ([`crate::lightroom_folder`]); a LightCraft library always opens, whatever else
+    /// created ([`crate::lightroom_folder`]); a Smurkcraft library always opens, whatever else
     /// its folder holds.
     pub fn open_library(&mut self, dir: impl AsRef<Path>, seed_demo: bool) -> Result<&LoadReport> {
         let dir = dir.as_ref().to_path_buf();
@@ -773,7 +773,7 @@ impl Session {
 fn unlocked_warning(lock: Option<&LibraryLock>) -> Option<String> {
     lock.filter(|l| !l.held()).map(|_| {
         "This library could not be locked (its catalog.lock file can't be locked where it is stored, e.g. on some network \
-         shares), so it is open without protection against a second program: use it in one LightCraft app or command at \
+         shares), so it is open without protection against a second program: use it in one Smurkcraft app or command at \
          a time, or changes made in one of them can be lost."
             .to_string()
     })

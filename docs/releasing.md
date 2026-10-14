@@ -1,4 +1,4 @@
-# Releasing LightCraft
+# Releasing Smurkcraft
 
 The release pipeline is [`.github/workflows/release.yml`](../.github/workflows/release.yml).
 It runs on every push to the `release` branch. A maintainer can also dispatch it manually, with
@@ -14,7 +14,7 @@ still apply.
    marked as prereleases.
 3. Push to `release`, or dispatch the workflow on `release` (a dispatch on another branch is a dry run; see below).
 4. Check the workflow run and its artifacts. On success, the workflow creates or updates a **draft**
-   GitHub Release named `LightCraft v<version>`, targeted at the commit that triggered the run.
+   GitHub Release named `Smurkcraft v<version>`, targeted at the commit that triggered the run.
    Review the draft and its `SHA256SUMS.txt`, then publish it in GitHub Releases when ready.
 
 The workflow replaces assets when it updates an existing draft. It stops rather than overwriting a
@@ -30,20 +30,20 @@ and the WASM web app. The platform scripts in [`packaging/`](../packaging/) writ
 - Windows: MSI installer and portable ZIP for each architecture.
 - Linux: AppImage (with its `.AppImage.zsync`), `.deb`, `.rpm`, and `.tar.gz` for each
   architecture (`packaging/linux/package.sh`). Each AppImage embeds
-  `gh-releases-zsync|storytold|lightcraft|latest|lightcraft-*-linux-<arch>.AppImage.zsync`, so
+  `gh-releases-zsync|ammy100|smurkcraft-lightcraft|latest|smurkcraft-lightcraft-*-linux-<arch>.AppImage.zsync`, so
   AppImageUpdate fetches only the changed blocks from the latest published (non-pre-) release.
 - Linux riscv64: `.tar.gz` only, cross-compiled on Ubuntu 24.04 against its riscv64 ports
   libraries (so glibc 2.39 or newer), with the CLI smoke-tested under QEMU (`CROSS_*` variables
   of `packaging/linux/package.sh`).
 - Flatpak: a single-file `.flatpak` bundle for each architecture, repackaged from that
   architecture's Linux tarball (`packaging/linux/flatpak-bundle.sh` with
-  `packaging/linux/flatpak/ai.storyteller.lightcraft.bundle.yml`; no Rust build). The from-source
-  manifest `ai.storyteller.lightcraft.yml` is for Flathub; packaging-lint keeps their runtime and
+  `packaging/linux/flatpak/io.github.ammy100.smurkcraft.lightcraft.bundle.yml`; no Rust build). The from-source
+  manifest `io.github.ammy100.smurkcraft.lightcraft.yml` is for Flathub; packaging-lint keeps their runtime and
   `finish-args` identical.
-- FreeBSD: `lightcraft-<version>-freebsd-x86_64.tar.gz`, a `/usr/local`-style tree built in a
+- FreeBSD: `smurkcraft-lightcraft-<version>-freebsd-x86_64.tar.gz`, a `/usr/local`-style tree built in a
   FreeBSD 14.3 VM (`packaging/freebsd/package.sh`, the same packages as `freebsd.yml`). Install
   with `tar -xzf <file> --strip-components 1 -C /usr/local`.
-- Web: `lightcraft-web-<version>.zip`.
+- Web: `smurkcraft-web-<version>.zip`.
 
 Only the macOS, Windows and draft-release jobs use the `release` environment. The others sign
 nothing, so dispatching the workflow on a branch (`gh workflow run release.yml --ref <branch>`)

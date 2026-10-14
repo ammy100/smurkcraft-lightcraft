@@ -152,7 +152,7 @@ impl Backend for Headless {
             }
             "app.export" => self.export(&p),
             m if m.starts_with("ui.") || m == "app.quit" => {
-                Err(format!("`{m}` needs the desktop app: start `lightcraft --control 7980` and run the MCP server with `--connect`"))
+                Err(format!("`{m}` needs the desktop app: start `smurkcraft-lightcraft --control 7980` and run the MCP server with `--connect`"))
             }
             other => Err(format!("unknown method `{other}`")),
         }

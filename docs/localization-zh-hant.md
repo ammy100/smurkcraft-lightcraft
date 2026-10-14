@@ -1,7 +1,7 @@
-# LightCraft 繁體中文（台灣）介面
+# Smurkcraft 繁體中文（台灣）介面
 
 從「編輯 → 語言 → 繁體中文（台灣）」切換，或開啟「設定 → 一般 → 語言」選擇。
-macOS 的設定也可由「LightCraft → 設定…」或 `⌘,` 開啟。
+macOS 的設定也可由「Smurkcraft → 設定…」或 `⌘,` 開啟。
 語言立即生效，並儲存在應用程式設定的 `ui.json`，下次啟動會沿用。
 英文、簡體中文、繁體中文與日文可隨時互相切換。
 
@@ -17,7 +17,7 @@ macOS 的設定也可由「LightCraft → 設定…」或 `⌘,` 開啟。
 使用既有 [craft-fonts](https://github.com/storytold/craft-fonts) 字型作為建置輸入：
 
 ```sh
-CRAFT_FONTS_DIR=../craft-fonts cargo run --release -p lightcraft
+CRAFT_FONTS_DIR=../craft-fonts cargo run --release -p smurkcraft
 ```
 
 craft-fonts 目前沒有繁體中文專用字型：桌面版先以 Noto Sans CJK SC 顯示繁中文字（字形為大陸規範寫法），其次才是日文字型；不在此儲存庫新增字型檔。
@@ -26,7 +26,7 @@ Web 建置在 WASM 中嵌入 BIZ UDPGothic Regular，並另外載入 Noto Sans C
 
 ## 自動化與維護
 
-`LIGHTCRAFT_LANGUAGE=zh-hant lightcraft-cli snapshot --demo -o zh-hant.png` 可繪製繁中畫面。
+`LIGHTCRAFT_LANGUAGE=zh-hant smurkcraft-cli snapshot --demo -o zh-hant.png` 可繪製繁中畫面。
 接受 `zh-hant`、`zh-Hant`、`zh-TW`、`zh_TW.UTF-8` 與 `zh-HK`；儲存時統一使用 `zh-hant`。
 控制通道可切換語言：
 

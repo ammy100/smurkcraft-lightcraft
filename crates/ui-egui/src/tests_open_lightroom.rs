@@ -1,5 +1,5 @@
 //! Issue #891: File ▸ Open Library… given a Lightroom Classic catalog folder doesn't make a
-//! LightCraft library inside it. The library open now stays, and a dialog offers Import Lightroom
+//! Smurkcraft library inside it. The library open now stays, and a dialog offers Import Lightroom
 //! Catalog… with the catalog found, which starts the import of that `.lrcat`.
 
 use std::time::Duration;

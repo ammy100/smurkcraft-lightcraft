@@ -1,14 +1,4 @@
-<p align="center">
-  <a href="https://getartcraft.com/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/brand/artcraft-logo-white.svg">
-      <img alt="ArtCraft" src="docs/brand/artcraft-logo.svg" width="200">
-    </picture>
-  </a>
-</p>
-
-
-<h1 align="center">LightCraft</h1>
+<h1 align="center">Smurkcraft</h1>
 
 <h3 align="center">Your photos. Your pixels. Your machine.</h3>
 
@@ -31,26 +21,20 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/artcraft"><img alt="Join the ArtCraft community on Discord" src="https://img.shields.io/badge/Join%20us%20on%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40"></a>
+  <a href="https://github.com/ammy100/smurkcraft-lightcraft"><b>Smurkcraft GitHub 仓库</b></a> ·
+  <a href="https://github.com/storytold/lightcraft">LightCraft 原项目</a>
 </p>
 
-<p align="center">
-  <a href="https://getartcraft.com/apps/lightcraft"><b>getartcraft.com 上的 LightCraft</b></a> ·
-  <a href="https://getartcraft.com/">ArtCraft</a> ·
-  <a href="https://getartcraft.com/apps">全部 Crafting Apps</a>
-</p>
+> Smurkcraft 是基于 [LightCraft](https://github.com/storytold/lightcraft) 的独立社区重品牌项目，
+> 与原项目维护者无隶属或背书关系。
 
 <br>
 
 <p align="center">
-  <img src="docs/images/hero-tetons.jpg" alt="LightCraft 的编辑视图：放大视图中是安塞尔·亚当斯的《特顿山脉与蛇河》，右侧打开着 Light 与 Effects 面板，底部的胶片窗格中是四张展示照片" width="100%">
+  <img src="docs/images/hero-tetons.jpg" alt="Smurkcraft 的编辑视图：放大视图中是安塞尔·亚当斯的《特顿山脉与蛇河》，右侧打开着 Light 与 Effects 面板，底部的胶片窗格中是四张展示照片" width="100%">
   <br>
-  <sub><i>安塞尔·亚当斯，《特顿山脉与蛇河》（1942）。公有领域，美国国家档案馆。在 LightCraft 中显影。</i></sub>
+  <sub><i>安塞尔·亚当斯，《特顿山脉与蛇河》（1942）。公有领域，美国国家档案馆。在 Smurkcraft 中显影。</i></sub>
 </p>
-
-> [!NOTE]
-> **ArtCraft 是一个由形形色色的创作者组成的社区。** 数字艺术、生成艺术、音乐、游戏 &mdash;
-> 只要你在创作，你就是我们中的一员。**[来 Discord 打个招呼吧](https://discord.gg/artcraft)。**
 
 <p align="center">
   <a href="#edit-like-you-mean-it">编辑</a> ·
@@ -64,15 +48,14 @@
   <a href="#feature-status">功能状态</a> ·
   <a href="#quick-start">快速开始</a> ·
   <a href="ROADMAP.md">路线图</a> ·
-  <a href="#downloads">下载</a> ·
-  <a href="#the-crafting-apps">Crafting Apps</a>
+  <a href="#downloads">下载</a>
 </p>
 
 <br>
 
 ## Edit like you mean it
 
-LightCraft 是一个装在单个原生应用里的完整暗房。每一项调整都是**非破坏性**的，原始文件永远不会被改动。
+Smurkcraft 是一个装在单个原生应用里的完整暗房。每一项调整都是**非破坏性**的，原始文件永远不会被改动。
 每个滑块都经过一条**场景参考、宽色域、32 位浮点的管线**渲染：高光像胶片一样柔和滚降，阴影被提亮却不产生光晕，
 色彩从拍摄到导出始终保持干净。
 
@@ -129,7 +112,7 @@ LightCraft 是一个装在单个原生应用里的完整暗房。每一项调整
 ## Before & after
 
 按住 <kbd>\\</kbd> 偷看原图，按 <kbd>Y</kbd> 并排对比，或按 <kbd>Shift</kbd>+<kbd>Y</kbd> 分屏查看。
-下面每一张都是 LightCraft 的真实截图，由智能体通过[控制通道](#built-for-agents)自动截取。
+下面每一张都是 Smurkcraft 的真实截图，由智能体通过[控制通道](#built-for-agents)自动截取。
 
 <table>
 <tr>
@@ -154,7 +137,7 @@ LightCraft 是一个装在单个原生应用里的完整暗房。每一项调整
 <p align="center">
   <img src="docs/images/masking.jpg" alt="蒙版面板中有一个线性天空蒙版和一个径向阳光光晕蒙版；径向渐变在湖景照片上以红色叠加层画在太阳周围" width="100%">
   <br>
-  <sub>叠加在线性「天空」蒙版之上的径向「阳光光晕」蒙版（色温 +40、曝光 +0.50）。<i>照片来自 LightCraft 程序生成的演示图库。</i></sub>
+  <sub>叠加在线性「天空」蒙版之上的径向「阳光光晕」蒙版（色温 +40、曝光 +0.50）。<i>照片来自 Smurkcraft 程序生成的演示图库。</i></sub>
 </p>
 
 <br>
@@ -221,12 +204,12 @@ Landscape* 等等），每个都有 0 到 200 % 的**数量**滑块。你可以�
 
 ## Built for agents
 
-LightCraft 里的每一个菜单项、滑块、画笔笔触、裁剪手柄和按键都是一个**命令**，拥有稳定的 ID 和
+Smurkcraft 里的每一个菜单项、滑块、画笔笔触、裁剪手柄和按键都是一个**命令**，拥有稳定的 ID 和
 JSON 参数。界面、键盘、CLI、JSON-lines 控制通道和一个 **MCP 服务器**全都通过同一个入口分发。
 智能体可以挑片、显影、给天空加蒙版并导出，而且能*看到*结果。
 
 ```sh
-lightcraft --control 7980 ~/Pictures/trip
+smurkcraft-lightcraft --control 7980 ~/Pictures/trip
 ```
 ```jsonc
 {"method": "engine.execute", "params": {"command": "photo.flag",  "params": {"flag": "pick"}}}
@@ -239,25 +222,25 @@ lightcraft --control 7980 ~/Pictures/trip
 
 - **命令注册表。** `engine.commands` 列出可用命令；`develop.controls` 列出每个滑块的范围、
   默认值和当前值。
-- **MCP 服务器。** `lightcraft-cli mcp` 把命令注册表开放给 Claude（或任何 MCP 客户端），
+- **MCP 服务器。** `smurkcraft-cli mcp` 把命令注册表开放给 Claude（或任何 MCP 客户端），
   同时提供导入、查询、显影、蒙版、渲染（以图像返回）和导出的辅助工具。它既能无界面运行，也能附着
   到正在运行的应用上，支持截图、点击和手势。见 [docs/mcp.md](docs/mcp.md)。
 
   ```sh
-  cargo build --release -p lightcraft-cli
-  claude mcp add lightcraft -- "$PWD/target/release/lightcraft-cli" mcp ~/Pictures/shoot          # 无界面
-  claude mcp add lightcraft-app -- "$PWD/target/release/lightcraft-cli" mcp --connect 127.0.0.1:7980  # 驱动运行中的应用
+  cargo build --release -p smurkcraft-cli
+  claude mcp add smurkcraft -- "$PWD/target/release/smurkcraft-cli" mcp ~/Pictures/shoot          # 无界面
+  claude mcp add smurkcraft-app -- "$PWD/target/release/smurkcraft-cli" mcp --connect 127.0.0.1:7980  # 驱动运行中的应用
   ```
-- **可脚本化的 CLI：** `lightcraft-cli run --import in.dng develop.set control=light.exposure value=0.7 app.export
+- **可脚本化的 CLI：** `smurkcraft-cli run --import in.dng develop.set control=light.exposure value=0.7 app.export
   path=out.jpg longEdge=2048` 可以运行任意命令链（无界面、在已保存的图库上，或对正在运行的应用），
-  每条命令打印一行 JSON 结果；`lightcraft-cli render in.dng -o out.jpg --set light.exposure=0.7 --preset …`。
+  每条命令打印一行 JSON 结果；`smurkcraft-cli render in.dng -o out.jpg --set light.exposure=0.7 --preset …`。
 - **一切皆可撤销**，包括智能体的操作：一次滑块拖动（或脚本里一连串更新）算一步撤销。
 - **联系表（原生应用／CLI）：** 选中照片，然后 **文件 → 联系表 PDF…**。可选择 A4 或 Letter、横向、
   行数和列数以及文件名题注；保存分页 PDF，再用你的 PDF 阅读器打印。导出使用当前编辑，每张照片完整放入
   而不再次裁剪，以 150 dpi 和 sRGB 渲染。后台导出支持取消，并保护原文件和 XMP 附属文件。从 CLI 调用：
 
   ```sh
-  lightcraft-cli run --import ~/Pictures/shoot library.selectAll export.contactSheet path=Contact.pdf paper=a4 columns=3 rows=4 captions=true
+  smurkcraft-cli run --import ~/Pictures/shoot library.selectAll export.contactSheet path=Contact.pdf paper=a4 columns=3 rows=4 captions=true
   ```
 
   `export.contactSheet` 还接受显式的 `ids`、`landscape=true` 和 `paper=letter`。只有当整个 PDF 生成成功后，
@@ -276,7 +259,7 @@ lightcraft --control 7980 ~/Pictures/trip
 - **纯 Rust，无 C。** 我们自己的 RAW 解码器（DNG、佳能 CR2/CR3、索尼 ARW、尼康 NEF、富士 RAF 含 X-Trans、
   松下 RW2／徕卡 RWL、宾得 PEF、奥林巴斯 ORF）、我们自己的色彩科学、我们自己的管线。JPEG、PNG、TIFF、WebP、
   PSD 合成图和 JPEG XL 现在就能打开；加 `--features heif` 还能打开 HEIC/HEIF 照片（HEVC 是构建时的选择，
-  与 PhotoCraft 中一致）。
+  由于 HEVC 专利因素，此功能需在构建时选择）。
 - **场景参考与宽色域。** 内部使用线性 Rec.2020 浮点、Bradford 适应的白平衡、用色域映射代替裁剪，
   raw 走胶片式肩部，未改动过的 JPEG 则像素级直通。
 - **分辨率无关的编辑。** 半径和画笔大小都相对于图像，所以 400 px 的预览、你的 5K 显示器和 60 MP 的导出
@@ -297,7 +280,7 @@ lightcraft --control 7980 ~/Pictures/trip
 
 ## Feature status
 
-LightCraft 很年轻，而且进展很快。**我们如实所处的位置**（细节见[路线图](ROADMAP.md#where-we-stand)）：
+Smurkcraft 很年轻，而且进展很快。**我们如实所处的位置**（细节见[路线图](ROADMAP.md#where-we-stand)）：
 
 - **按功能数量算，我们达到了 Lightroom 的约 79%**（核心功能 98%），逐行记录在
   [docs/parity.md](docs/parity.md)。
@@ -342,13 +325,13 @@ LightCraft 很年轻，而且进展很快。**我们如实所处的位置**（�
 ## Quick start
 
 ```sh
-git clone https://github.com/storytold/lightcraft && cd lightcraft
-cargo run --release -p lightcraft                       # 打开你的图库（~/Pictures/LightCraft Library；新图库会先带演示照片）
-cargo run --release -p lightcraft -- ~/Pictures/trip    # 导入你的照片（扫描文件夹，跳过重复项）
-cargo run --release -p lightcraft -- --memory           # 用完即弃的内存演示会话（不写入任何内容）
-cargo run --release -p lightcraft -- --control 7980     # 带自动化通道
+git clone https://github.com/ammy100/smurkcraft-lightcraft && cd smurkcraft-lightcraft
+cargo run --release -p smurkcraft                       # 打开你的图库（~/Pictures/LightCraft Library；新图库会先带演示照片）
+cargo run --release -p smurkcraft -- ~/Pictures/trip    # 导入你的照片（扫描文件夹，跳过重复项）
+cargo run --release -p smurkcraft -- --memory           # 用完即弃的内存演示会话（不写入任何内容）
+cargo run --release -p smurkcraft -- --control 7980     # 带自动化通道
 cargo xtask web --serve                                 # 在浏览器中运行同一个应用：http://127.0.0.1:8080/
-cargo run --release -p lightcraft-cli -- render photo.jpg -o out.jpg --set light.exposure=0.5
+cargo run --release -p smurkcraft-cli -- render photo.jpg -o out.jpg --set light.exposure=0.5
 cargo xtask ci                                          # fmt、clippy、测试、分层、wasm 检查
 ```
 
@@ -365,15 +348,15 @@ CI 默认使用行表调试信息，并按启动时可用内存每 1.5 GB 开一
 `cargo build --release`。建议先使用一个构建任务；内存充足时可以尝试两个：
 
 ```sh
-CARGO_BUILD_JOBS=1 cargo build --release -p lightcraft -p lightcraft-cli
-# 或者：CARGO_BUILD_JOBS=2 cargo build --release -p lightcraft -p lightcraft-cli
+CARGO_BUILD_JOBS=1 cargo build --release -p smurkcraft -p smurkcraft-cli
+# 或者：CARGO_BUILD_JOBS=2 cargo build --release -p smurkcraft -p smurkcraft-cli
 ```
 
 如果打包环境启用了完整调试信息或占用较多内存的 LTO 设置，可以使用仅对本条命令生效的
 覆盖设置，降低源码构建的内存需求：
 
 ```sh
-CARGO_BUILD_JOBS=1 CARGO_PROFILE_RELEASE_DEBUG=0 CARGO_PROFILE_RELEASE_LTO=false CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16 cargo build --release -p lightcraft -p lightcraft-cli
+CARGO_BUILD_JOBS=1 CARGO_PROFILE_RELEASE_DEBUG=0 CARGO_PROFILE_RELEASE_LTO=false CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16 cargo build --release -p smurkcraft -p smurkcraft-cli
 ```
 
 这些 POSIX shell 赋值只影响本条命令，不修改全局 Cargo 配置或仓库的 release profile。
@@ -387,10 +370,10 @@ CARGO_BUILD_JOBS=1 CARGO_PROFILE_RELEASE_DEBUG=0 CARGO_PROFILE_RELEASE_LTO=false
 
 ```sh
 git clone https://github.com/storytold/craft-fonts ../craft-fonts
-CRAFT_FONTS_DIR=../craft-fonts cargo run --release -p lightcraft
+CRAFT_FONTS_DIR=../craft-fonts cargo run --release -p smurkcraft
 ```
 
-不指定它时，LightCraft 构建和运行的方式完全相同，只是中文和日文文字没有字形。字体从不提交到
+不指定它时，Smurkcraft 构建和运行的方式完全相同，只是中文和日文文字没有字形。字体从不提交到
 本仓库；见 [craftrules `standards/fonts.md`](https://github.com/storytold/craftrules/blob/main/standards/fonts.md)。
 
 **界面语言：** **编辑 → 语言**（English、简体中文、繁體中文（台灣）、日本語、Português (Brasil)、Español、Deutsch、Русский、Français）或 **设置 → 一般 →
@@ -403,31 +386,31 @@ CRAFT_FONTS_DIR=../craft-fonts cargo run --release -p lightcraft
 文件夹** 会在文件管理器中显示它）。每次启动会把
 上一个日志移到 `lightcraft.1.log`，再上一个移到 `lightcraft.2.log`，这样崩溃那次的日志能在下次启动后
 保留下来；文件到 16 MiB 停止增长，`--version` 和 `--help` 不写日志，带
-`LIGHTCRAFT_NO_PREFS` 运行时只写到标准错误。默认情况下 LightCraft 自己的 crate 记到 `info`，其他都记到
-`warn`。`LIGHTCRAFT_LOG=info` 或 `debug` 的行为和以前一样（LightCraft 自己的 crate 用该级别，其余只记警告和
+`LIGHTCRAFT_NO_PREFS` 运行时只写到标准错误。默认情况下 Smurkcraft 自己的 crate 记到 `info`，其他都记到
+`warn`。`LIGHTCRAFT_LOG=info` 或 `debug` 的行为和以前一样（Smurkcraft 自己的 crate 用该级别，其余只记警告和
 错误；其他值：只记警告和错误），并且优先于 `RUST_LOG`，后者会把默认值替换为
 env_logger 风格的指令，例如 `RUST_LOG=debug` 或 `RUST_LOG=warn,lightcraft_pipeline=trace`（以
 `*` 结尾的指令覆盖所有以它开头的目标，如 `lightcraft*=debug`）。panic 也会记录在那里，
-并且仍然写在临时文件夹里的 `lightcraft-panics.log`。日志器是 `apps/lightcraft/src/logging.rs`。
+并且仍然写在临时文件夹里的 `lightcraft-panics.log`。日志器是 `apps/smurkcraft-lightcraft/src/logging.rs`。
 
 网页版需要 `wasm32-unknown-unknown` target 和匹配的 `wasm-bindgen` CLI
 （`cargo xtask web` 会打印确切的安装命令）；见 [docs/web.md](docs/web.md)。
 
-**Nix** 会构建桌面应用和 `lightcraft-cli`（Nix 构建总是包含 craft-fonts 输入，所以日文
+**Nix** 会构建桌面应用和 `smurkcraft-cli`（Nix 构建总是包含 craft-fonts 输入，所以日文
 文字有字形）：
 
 ```sh
-nix run github:storytold/lightcraft                    # 桌面应用
-nix build github:storytold/lightcraft                  # → ./result/bin/{lightcraft,lightcraft-cli}
-nix develop github:storytold/lightcraft                # rust 工具链 + 原生依赖 + 字体
+nix run github:ammy100/smurkcraft-lightcraft           # 桌面应用
+nix build github:ammy100/smurkcraft-lightcraft         # → ./result/bin/{smurkcraft-lightcraft,smurkcraft-cli}
+nix develop github:ammy100/smurkcraft-lightcraft       # rust 工具链 + 原生依赖 + 字体
 ```
 
 在 flake 配置中（NixOS、home-manager、nix-darwin）：
 
 ```nix
 # flake.nix
-inputs.lightcraft.url = "github:storytold/lightcraft";
-# 可选：使用你自己的 nixpkgs，而不是 LightCraft 锁定的那个
+inputs.lightcraft.url = "github:ammy100/smurkcraft-lightcraft";
+# 可选：使用你自己的 nixpkgs，而不是 Smurkcraft 锁定的那个
 # inputs.lightcraft.inputs.nixpkgs.follows = "nixpkgs";
 
 # 然后在 NixOS 或 home-manager 模块中（`inputs` 在作用域内）：
@@ -447,7 +430,7 @@ environment.systemPackages = [ pkgs.lightcraft ];           # home-manager：hom
 一个引擎优先的 Cargo 工作区，由小而经过测试的 crate 组成，并强制分层（`cargo xtask layers`）：`geom`、
 `color`、`raster`、`tiff` → `raw`、`codecs`、`meta`、`develop` → `pipeline` → `catalog` → `engine` → `ui-egui`。
 egui 前端是一个可替换的 crate；它下面没有任何东西知道 UI 的存在。`mcp` 和应用（`lightcraft`、
-`lightcraft-cli`）坐落在 `engine` 之上。
+`smurkcraft-cli`）坐落在 `engine` 之上。
 
 ## Contributing
 
@@ -465,127 +448,83 @@ egui 前端是一个可替换的 crate；它下面没有任何东西知道 UI �
   `unsafe`，对任何来自输入的数据都做受检索引，并且每个崩溃修复都带一个回归测试。细节见
   [AGENTS.md](AGENTS.md#never-crash-outranks-feature-work)。
 
-有问题、想法，或者想先讨论一个 bug？来 [Discord](https://discord.gg/artcraft)。
+有问题或 bug？请使用 [GitHub Discussions 和 Issues](https://github.com/ammy100/smurkcraft-lightcraft/issues)。
 
 <br>
 
 ## Downloads
 
-**第一次用 LightCraft？** 从 [getartcraft.com 的 LightCraft 页面](https://getartcraft.com/apps/lightcraft)下载。那是最简单的安装方式。
+**第一次用 Smurkcraft？** 从 [最新 GitHub 发布](https://github.com/ammy100/smurkcraft-lightcraft/releases/latest)下载 Windows 安装程序。
 
-**想要特定的构建或格式？** 在 GitHub 上，[最新发布](https://github.com/storytold/lightcraft/releases/latest)包含下面列出的所有构建，[全部发布](https://github.com/storytold/lightcraft/releases)则有更早的版本及其说明。文件名中的 `<ver>` 是版本号，`SHA256SUMS.txt` 列出了每个文件的校验和。
+**想要特定的构建或格式？** [Smurkcraft 最新发布](https://github.com/ammy100/smurkcraft-lightcraft/releases/latest)列出可用下载及其校验和。文件名中的 `<ver>` 是版本号。
 
 ### Windows
 
 | 构建 | 安装程序 | 便携版 |
 |---|---|---|
-| x64（64 位 Intel/AMD） | `lightcraft-<ver>-windows-x64.msi` | `lightcraft-<ver>-windows-x64-portable.zip` |
-| arm64（骁龙及其他 ARM PC） | `lightcraft-<ver>-windows-arm64.msi` | `lightcraft-<ver>-windows-arm64-portable.zip` |
-| x86（32 位） | `lightcraft-<ver>-windows-x86.msi` | `lightcraft-<ver>-windows-x86-portable.zip` |
+| x64（64 位 Intel/AMD） | `smurkcraft-lightcraft-<ver>-windows-x64.msi` | `smurkcraft-lightcraft-<ver>-windows-x64-portable.zip` |
+| arm64（骁龙及其他 ARM PC） | `smurkcraft-lightcraft-<ver>-windows-arm64.msi` | `smurkcraft-lightcraft-<ver>-windows-arm64-portable.zip` |
+| x86（32 位） | `smurkcraft-lightcraft-<ver>-windows-x86.msi` | `smurkcraft-lightcraft-<ver>-windows-x86-portable.zip` |
 
-安装程序和可执行文件都有代码签名。安装程序会询问安装位置（默认
-`C:\Program Files\LightCraft`；升级会留在你选择的文件夹），结束时有一页确认 LightCraft 已安装，
-并可选择启动它。无人值守安装：`msiexec /i lightcraft-<ver>-windows-x64.msi /qn INSTALLFOLDER="D:\Apps\LightCraft\"`。
+除非发布流程配置了签名，否则安装程序和可执行文件均未签名。Windows 可能显示未知发布者或 SmartScreen 警告。
+安装程序会询问安装位置（默认 `C:\Program Files\Smurkcraft LightCraft`；升级会留在你选择的文件夹），
+结束时会确认 Smurkcraft 已安装，并可选择启动它。无人值守安装：
+`msiexec /i smurkcraft-lightcraft-<ver>-windows-x64.msi /qn INSTALLFOLDER="D:\Apps\Smurkcraft LightCraft\"`。
 
 ### macOS
 
 | 构建 | 文件 | 说明 |
 |---|---|---|
-| 应用，通用（Apple 芯片 + Intel） | `lightcraft-<ver>-macos-universal.dmg` | 已签名并公证 |
-| 命令行工具，通用 | `lightcraft-cli-<ver>-macos-universal.zip` | 已签名并公证 |
+| 应用，通用（Apple 芯片 + Intel） | `smurkcraft-lightcraft-<ver>-macos-universal.dmg` | 签名和公证取决于发布配置 |
+| 命令行工具，通用 | `smurkcraft-cli-<ver>-macos-universal.zip` | 已签名并公证 |
 
 ### Linux
 
 | 格式 | x86_64 | aarch64 (ARM64) | 说明 |
 |---|---|---|---|
-| AppImage | `lightcraft-<ver>-linux-x86_64.AppImage` | `lightcraft-<ver>-linux-aarch64.AppImage` | 随处可运行；用 [AppImageUpdate](https://github.com/AppImageCommunity/AppImageUpdate)（`.zsync` 文件）自我更新 |
-| Flatpak | `lightcraft-<ver>-linux-x86_64.flatpak` | `lightcraft-<ver>-linux-aarch64.flatpak` | 沙箱化；`flatpak install --user <file>` |
-| Debian/Ubuntu | `lightcraft-<ver>-linux-x86_64.deb` | `lightcraft-<ver>-linux-aarch64.deb` | |
-| Fedora/RHEL/openSUSE | `lightcraft-<ver>-linux-x86_64.rpm` | `lightcraft-<ver>-linux-aarch64.rpm` | |
-| 压缩包 | `lightcraft-<ver>-linux-x86_64.tar.gz` | `lightcraft-<ver>-linux-aarch64.tar.gz` | 解压到任意位置 |
+| AppImage | `smurkcraft-lightcraft-<ver>-linux-x86_64.AppImage` | `smurkcraft-lightcraft-<ver>-linux-aarch64.AppImage` | 随处可运行；用 [AppImageUpdate](https://github.com/AppImageCommunity/AppImageUpdate)（`.zsync` 文件）自我更新 |
+| Flatpak | `smurkcraft-lightcraft-<ver>-linux-x86_64.flatpak` | `smurkcraft-lightcraft-<ver>-linux-aarch64.flatpak` | 沙箱化；`flatpak install --user <file>` |
+| Debian/Ubuntu | `smurkcraft-lightcraft-<ver>-linux-x86_64.deb` | `smurkcraft-lightcraft-<ver>-linux-aarch64.deb` | |
+| Fedora/RHEL/openSUSE | `smurkcraft-lightcraft-<ver>-linux-x86_64.rpm` | `smurkcraft-lightcraft-<ver>-linux-aarch64.rpm` | |
+| 压缩包 | `smurkcraft-lightcraft-<ver>-linux-x86_64.tar.gz` | `smurkcraft-lightcraft-<ver>-linux-aarch64.tar.gz` | 解压到任意位置 |
 
 ### FreeBSD
 
 | 构建 | 文件 |
 |---|---|
-| x86_64 | `lightcraft-<ver>-freebsd-x86_64.tar.gz` |
+| x86_64 | `smurkcraft-lightcraft-<ver>-freebsd-x86_64.tar.gz` |
 
 ### 网页版（WebAssembly）
 
 | 构建 | 文件 | 说明 |
 |---|---|---|
-| 静态站点 | `lightcraft-web-<ver>.zip` | 在现代浏览器中运行；托管到任意静态服务器 |
+| 静态站点 | `smurkcraft-web-<ver>.zip` | 在现代浏览器中运行；托管到任意静态服务器 |
 
 <br>
 
-## The Crafting Apps
+## 上游项目
 
-LightCraft 是 **Crafting Apps** 之一：来自 [ArtCraft](https://getartcraft.com/) 团队的免费开源创作工具，
-每一个都用 Rust 从零编写，每一个都能独立使用。
-
-| | 应用 | 用途 | 代码 | 了解更多 |
-|:-:|---|---|---|---|
-| <img src="https://raw.githubusercontent.com/storytold/photocraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.photocraft.png" alt="" width="32" height="32"> | **PhotoCraft** | 图像编辑：图层、蒙版、文字和真正的 PSD 文件 | [GitHub](https://github.com/storytold/photocraft) | [网站](https://getartcraft.com/apps/photocraft) |
-| <img src="https://raw.githubusercontent.com/storytold/vectorcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.vectorcraft.png" alt="" width="32" height="32"> | **VectorCraft** | 矢量插画 | [GitHub](https://github.com/storytold/vectorcraft) | [网站](https://getartcraft.com/apps/vectorcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/filmcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.filmcraft.png" alt="" width="32" height="32"> | **FilmCraft** | 视频剪辑、调色与声音 | [GitHub](https://github.com/storytold/filmcraft) | [网站](https://getartcraft.com/apps/filmcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/lightcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.lightcraft.png" alt="" width="32" height="32"> | **LightCraft** | **照片图库与 raw 显影 · 你在这里** | [GitHub](https://github.com/storytold/lightcraft) | [网站](https://getartcraft.com/apps/lightcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/pdfcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.pdfcraft.png" alt="" width="32" height="32"> | **PdfCraft** | 阅读、整理和保护 PDF | [GitHub](https://github.com/storytold/pdfcraft) | [网站](https://getartcraft.com/apps/pdfcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/effectcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.effectcraft.png" alt="" width="32" height="32"> | **EffectCraft** | 动态图形与视觉特效 | [GitHub](https://github.com/storytold/effectcraft) | [网站](https://getartcraft.com/apps/effectcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/designcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.designcraft.png" alt="" width="32" height="32"> | **DesignCraft** | 页面排版与出版 | [GitHub](https://github.com/storytold/designcraft) | [网站](https://getartcraft.com/apps/designcraft) |
-
-以及 [**ArtCraft**](https://getartcraft.com/) 本身，我们为想要真正掌控力的创作者打造的 AI 图像与视频工作室。
-
-<br>
-
-<p align="center">
-  <a href="https://discord.gg/artcraft"><img alt="Join the ArtCraft community on Discord" src="https://img.shields.io/badge/Join%20us%20on%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40"></a>
-</p>
-
-<h3 align="center">Come make things with us</h3>
-
-<p align="center">
-  我们的 Discord 是各种创作者聚集的地方：画画的人、拍照的人、做动画的人、剪片子的人、
-  排版的人，还有仍在摸索自己喜欢做什么的人。分享你在做的东西，
-  寻求帮助，告诉我们哪里坏了，或者告诉我们你希望这些工具能做什么。
-  无论你用什么媒介，无论你做了多久，这里都欢迎你。
-</p>
-
-<p align="center">
-  <a href="https://discord.gg/artcraft"><b>discord.gg/artcraft</b></a> ·
-  <a href="https://getartcraft.com/">getartcraft.com</a> ·
-  <a href="https://getartcraft.com/apps">The Crafting Apps</a> ·
-  <a href="https://getartcraft.com/apps/lightcraft">LightCraft</a>
-</p>
-
-<br>
+Smurkcraft 是由社区维护的 [LightCraft](https://github.com/storytold/lightcraft) 重品牌版本。我们保留其源代码历史、许可证和必要署名，并独立维护此分支。
 
 ## License and credits
 
-LightCraft 采用 [MIT](LICENSE-MIT) 或 [Apache-2.0](LICENSE-APACHE) 双许可，任你选择。
-Copyright (c) 2026 ArtCraft Team and the LightCraft contributors. 必需的声明见 [NOTICE](NOTICE)。
+Smurkcraft 采用 [MIT](LICENSE-MIT) 或 [Apache-2.0](LICENSE-APACHE) 双许可，任你选择。
+Copyright (c) 2026 ArtCraft Team and the Smurkcraft contributors. 必需的声明见 [NOTICE](NOTICE)。
 
 随附的字体、图标、图像和其他资源保留各自的开放许可；每一项都在
 [assets/ATTRIBUTION.md](assets/ATTRIBUTION.md) 中列出了作者、来源和许可。
 
 展示照片是经 Wikimedia Commons 使用的公有领域作品：安塞尔·亚当斯，*《特顿山脉与蛇河》*
 （1942，美国国家档案馆）；多萝西娅·兰格，*《移民母亲》*（1936，美国国会图书馆）；比尔·安德斯／NASA，
-*《地出》*（1968）；NASA，*《蓝色弹珠》*（1972）。演示图库由 LightCraft 程序生成。界面字体：
+*《地出》*（1968）；NASA，*《蓝色弹珠》*（1972）。演示图库由 Smurkcraft 程序生成。界面字体：
 Inter（SIL OFL 1.1）。用 [craft-fonts](https://github.com/storytold/craft-fonts) 构建的版本（所有正式发布版）
 还会内嵌它的中文和日文字体（Noto Sans CJK SC、BIZ UDPGothic、BIZ UDMincho、Shippori Mincho；SIL OFL 1.1），列在其
 [ATTRIBUTION.md](https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md) 中。所有图标均为原创。
 
-[`docs/brand/`](docs/brand/) 中的 ArtCraft 名称、字标和标志是
-ArtCraft 团队的商标，不在本许可范围内。它们只能在未修改的情况下，作为
-本仓库和 LightCraft 的一部分，按 [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt) 使用。
-分支和修改版本必须移除它们。
+此分支不包含上游 ArtCraft 标志或商标图案。
 
-<sub>Adobe、Photoshop、Illustrator、Premiere Pro、Lightroom、Acrobat、After Effects 和 InDesign 是 Adobe Inc. 在美国和／或其他国家的商标或注册商标。LightCraft 是一个独立的开源项目，与 Adobe Inc. 无隶属关系，也未获其赞助或认可；这些名称仅用于说明它所兼容的工作流。</sub>
-
-<p align="center">
-  <a href="https://getartcraft.com/"><img alt="ArtCraft" src="docs/brand/artcraft-mark.svg" width="28"></a><br>
-  <sub>由 <a href="https://getartcraft.com/">ArtCraft</a> 团队和社区制作。</sub>
-</p>
+<sub>Adobe、Photoshop、Illustrator、Premiere Pro、Lightroom、Acrobat、After Effects 和 InDesign 是 Adobe Inc. 在美国和／或其他国家的商标或注册商标。Smurkcraft 是一个独立的开源项目，与 Adobe Inc. 无隶属关系，也未获其赞助或认可；这些名称仅用于说明它所兼容的工作流。</sub>
 
 ## Star history
 
-[![Star History Chart](https://api.star-history.com/svg?repos=storytold/lightcraft&type=Date&legend=top-left)](https://www.star-history.com/?repos=storytold%2Flightcraft&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=ammy100/smurkcraft-lightcraft&type=Date&legend=top-left)](https://www.star-history.com/?repos=ammy100%2Fsmurkcraft-lightcraft&type=date&legend=top-left)

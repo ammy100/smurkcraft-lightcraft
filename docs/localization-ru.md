@@ -1,4 +1,4 @@
-# LightCraft на русском
+# Smurkcraft на русском
 
 Выберите **Правка → Язык → Русский** или **Настройки → Общие → Язык**. Выбор применяется сразу
 и сохраняется для следующего запуска (`language: "ru"` в `ui.json`).
@@ -19,5 +19,5 @@
 
 ```sh
 cargo test -p lightcraft-ui-egui i18n::tests -- --nocapture
-LIGHTCRAFT_LANGUAGE=ru lightcraft-cli snapshot --demo -o russian.png --size 1600x1000
+LIGHTCRAFT_LANGUAGE=ru smurkcraft-cli snapshot --demo -o russian.png --size 1600x1000
 ```

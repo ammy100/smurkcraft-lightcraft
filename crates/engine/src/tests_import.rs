@@ -1236,7 +1236,7 @@ fn expand_stops_at_the_walk_limits() {
     let _ = std::fs::remove_dir_all(&d);
 }
 
-/// Raw containers LightCraft cannot decode but shows by their embedded JPEG are picked up from a folder
+/// Raw containers Smurkcraft cannot decode but shows by their embedded JPEG are picked up from a folder
 /// (the extensions are in `import::EXTENSIONS`; the files differ so none is a duplicate) and import as preview only.
 #[test]
 fn folder_import_picks_up_undecodable_raw_containers_as_preview_only() {
@@ -1545,7 +1545,7 @@ fn heic_imports_as_a_normal_photo_or_says_why_not() {
 /// Issue #705: Nikon (and most cameras) write `.JPG` and `.NEF`, and a user may rename to `.Jpg`.
 /// The folder scan, `library.browse` and the sidecar lookup match extensions in any letter
 /// case. (The file dialog's filters, the one place that was case-sensitive on Linux before
-/// #342, are checked in `apps/lightcraft/src/dialog_filter.rs`.)
+/// #342, are checked in `apps/smurkcraft-lightcraft/src/dialog_filter.rs`.)
 #[test]
 fn upper_and_mixed_case_extensions_are_found_by_import_browse_and_sidecar_lookup() {
     use lightcraft_codecs::{ChromaSubsampling, EncodeImage, EncodeMeta, Samples, encode_jpeg};
@@ -1558,7 +1558,7 @@ fn upper_and_mixed_case_extensions_are_found_by_import_browse_and_sidecar_lookup
     std::fs::write(src.join("b.Jpg"), jpeg(2)).unwrap();
     std::fs::write(src.join("c.JPEG"), jpeg(3)).unwrap();
     write_png(&src.join("d.PNG"), 4);
-    // a raw container LightCraft shows by its embedded JPEG (a TIFF whose IFD0 points at one)
+    // a raw container Smurkcraft shows by its embedded JPEG (a TIFF whose IFD0 points at one)
     let nef = {
         let j = jpeg(5);
         let off = 8 + 2 + 24 + 4;

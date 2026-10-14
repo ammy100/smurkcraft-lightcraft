@@ -1,4 +1,4 @@
-# Install the SAM 3 model for LightCraft's Object and Describe masks on Windows
+# Install the SAM 3 model for Smurkcraft's Object and Describe masks on Windows
 # (see docs/ai-masks.md; tools/install-sam3.sh is the macOS/Linux version). The desktop app
 # offers to download the model itself when an AI mask first needs it; this is for developers.
 #
@@ -57,4 +57,4 @@ foreach ($f in $Files + "model.safetensors") {
     Move-Item -Force $part $final
 }
 Test-Install
-Write-Host "Restart LightCraft; Object and Describe in the Masking panel now use it."
+Write-Host "Restart Smurkcraft; Object and Describe in the Masking panel now use it."

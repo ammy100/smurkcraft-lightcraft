@@ -1,10 +1,10 @@
 # Display (monitor) profiles
 
-LightCraft can show photos through the monitor's ICC profile, so colours are right on wide-gamut and calibrated
+Smurkcraft can show photos through the monitor's ICC profile, so colours are right on wide-gamut and calibrated
 displays. Without one, previews are sRGB, which a wide-gamut panel shows oversaturated.
 
 **macOS uses the screen's own profile** (the one System Settings ▸ Displays assigns) while none is chosen. macOS doesn't
-colour-manage LightCraft's window (wgpu leaves its Metal layer without a colour space, which Core Animation shows
+colour-manage Smurkcraft's window (wgpu leaves its Metal layer without a colour space, which Core Animation shows
 unmatched), so on a P3 screen previews used to look more saturated than the exported files in Preview or Photos (issue
 #787). The profile is read again about once a second, so moving the window to another screen is followed.
 
@@ -26,7 +26,7 @@ and applies at once; a file that can't be used is reported there and previews st
 Agents and scripts: `app.displayProfile {"path": "/path/to/monitor.icc"}` (`""` or `null`: none; no `path`: report
 only) returns `{path, description, kind: "matrix" | "lut", primaries: {red, green, blue: [x, y]}}`; the screen's
 profile (macOS or Linux, none chosen) reports `path: null, screen: true`. Hosts supply it as `Services::screen_profile`
-(`apps/lightcraft/src/screen_profile.rs`, `apps/lightcraft/src/colord.rs`); headless sessions have none and stay sRGB.
+(`apps/smurkcraft-lightcraft/src/screen_profile.rs`, `apps/smurkcraft-lightcraft/src/colord.rs`); headless sessions have none and stay sRGB.
 
 ## How it works
 
