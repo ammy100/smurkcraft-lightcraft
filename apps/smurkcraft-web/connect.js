@@ -30,7 +30,8 @@ function mount() {
       <button id="sc-google" class="sc-secondary">Continue with Google ↗</button><button id="sc-auth-mode" class="sc-link">New here? Create an account</button><p class="sc-note">Your photo library stays local. Connect uses the internet for account and messaging features.</p>
     </section>
     <section id="sc-app" class="sc-hidden">
-      <div class="sc-account"><div class="sc-avatar" id="sc-avatar">S</div><div class="sc-account-copy"><strong id="sc-user-name">Creator</strong><small id="sc-user-email"></small></div><button id="sc-signout" class="sc-link">Sign out</button></div>
+      <div class="sc-account"><div class="sc-avatar" id="sc-avatar">S</div><div class="sc-account-copy"><strong id="sc-user-name">Creator</strong><small id="sc-user-email"></small></div><button id="sc-profile-toggle" class="sc-link">Profile</button><button id="sc-signout" class="sc-link">Sign out</button></div>
+      <form id="sc-profile-form" class="sc-profile-form sc-hidden"><label>Creator username <input id="sc-profile-username" minlength="3" maxlength="32" pattern="[A-Za-z0-9_]+" placeholder="yourname" required></label><button class="sc-primary" type="submit">Save username</button><p class="sc-note">Other creators can find you using this username.</p></form>
       <nav class="sc-tabs"><button data-tab="chats" class="sc-tab sc-selected">Chats</button><button data-tab="assistant" class="sc-tab">Smurk AI</button><button data-tab="updates" class="sc-tab">Updates <i id="sc-update-dot"></i></button></nav>
       <div id="sc-chats" class="sc-view"><div class="sc-section-title"><div><h3>Messages</h3><p>Keep your creative circle close.</p></div><button id="sc-new-chat" class="sc-round" title="Start a conversation">＋</button></div><div id="sc-chat-list" class="sc-list"></div><div id="sc-new-chat-form" class="sc-new-chat sc-hidden"><label>Start a chat by username<input id="sc-username" placeholder="creatorname"></label><button id="sc-start-chat" class="sc-primary">Start chat</button></div><div id="sc-thread" class="sc-thread sc-hidden"><button id="sc-back" class="sc-back">← All chats</button><div class="sc-thread-title" id="sc-thread-title">Conversation</div><div id="sc-message-list" class="sc-message-list"></div><form id="sc-send-form" class="sc-send"><input id="sc-message-input" maxlength="10000" autocomplete="off" placeholder="Write a message…" required><button class="sc-send-btn" aria-label="Send message">↑</button></form></div></div>
       <div id="sc-assistant" class="sc-view sc-hidden"><div class="sc-section-title"><div><h3>Smurk AI</h3><p>Creative help, without the noise.</p></div><span class="sc-local-badge">LOCAL TIPS</span></div><div id="sc-ai-log" class="sc-ai-log"><div class="sc-ai-bubble"><b>Hey, creator 👋</b><br>I can help plan an edit, suggest colour grades, explain tools and build a workflow. Your actual photo adjustments remain in Smurkcraft.</div><div class="sc-prompts"><button data-prompt="Suggest a cinematic portrait edit">Cinematic portrait</button><button data-prompt="Help me choose colours for a campaign">Campaign colours</button><button data-prompt="Give me a clean photo editing workflow">Editing workflow</button></div></div><form id="sc-ai-form" class="sc-send"><input id="sc-ai-input" autocomplete="off" placeholder="Ask your creative assistant…" required><button class="sc-send-btn" aria-label="Send">↑</button></form><p class="sc-note">This starter assistant runs lightweight local guidance. It does not yet apply edits automatically.</p></div>
@@ -44,6 +45,8 @@ function mount() {
   $("#sc-auth-form").addEventListener("submit", authWithEmail);
   $("#sc-google").onclick = async () => { const { error } = await supabase.auth.signInWithOAuth({provider:"google", options:{redirectTo:location.href.split("#")[0]}}); if (error) toast(error.message); };
   $("#sc-signout").onclick = async () => { await supabase.auth.signOut(); };
+  $("#sc-profile-toggle").onclick = () => $("#sc-profile-form").classList.toggle("sc-hidden");
+  $("#sc-profile-form").addEventListener("submit", saveUsername);
   document.querySelectorAll(".sc-tab").forEach(b => b.onclick = () => switchTab(b.dataset.tab));
   $("#sc-new-chat").onclick = () => $("#sc-new-chat-form").classList.toggle("sc-hidden");
   $("#sc-start-chat").onclick = startChat;
@@ -76,6 +79,7 @@ async function renderAuth() {
   const {data:profile}=await supabase.from("connect_profiles").select("*").eq("user_id",user.id).maybeSingle();
   const displayName=profile?.display_name||meta.display_name||meta.full_name||user.email?.split("@")[0]||"Creator";
   $("#sc-user-name").textContent=displayName; $("#sc-avatar").textContent=displayName.slice(0,1).toUpperCase();
+  $("#sc-profile-username").value=profile?.username||"";
   await supabase.from("connect_profiles").upsert({user_id:user.id,display_name:displayName,avatar_url:meta.avatar_url||meta.picture||null},{onConflict:"user_id"});
   await Promise.all([loadConversations(),loadAnnouncements()]);
   if(!realtime) realtime=supabase.channel("smurk-connect-global").on("postgres_changes",{event:"INSERT",schema:"public",table:"connect_messages"},payload=>{ if(activeConversation && payload.new.conversation_id===activeConversation) loadMessages(activeConversation); else loadConversations(); }).on("postgres_changes",{event:"INSERT",schema:"public",table:"connect_announcements"},()=>loadAnnouncements()).subscribe();
@@ -84,6 +88,14 @@ function switchTab(tab) {
   activeTab=tab; document.querySelectorAll(".sc-tab").forEach(b=>b.classList.toggle("sc-selected",b.dataset.tab===tab));
   ["chats","assistant","updates"].forEach(name=>$("#sc-"+name).classList.toggle("sc-hidden",name!==tab));
   if(tab==="updates") loadAnnouncements();
+}
+async function saveUsername(e) {
+  e.preventDefault();
+  const username=$("#sc-profile-username").value.trim().replace(/^@/,"").toLowerCase();
+  if(!/^[a-z0-9_]{3,32}$/.test(username)) return toast("Use 3–32 letters, numbers or underscores.");
+  const {error}=await supabase.from("connect_profiles").upsert({user_id:session.user.id,username,display_name:$("#sc-user-name").textContent},{onConflict:"user_id"});
+  if(error) return toast(error.code==="23505"?"That username is already taken.":error.message);
+  toast("Username saved. Creators can now find you."); $("#sc-profile-form").classList.add("sc-hidden");
 }
 async function loadConversations() {
   const list=$("#sc-chat-list"); if(!session||!list) return;
