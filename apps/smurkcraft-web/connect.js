@@ -123,8 +123,10 @@ async function startChat() {
   if(ids.length){const {data:theirs}=await supabase.from("connect_conversation_members").select("conversation_id").eq("user_id",person.user_id).in("conversation_id",ids);if(theirs?.length){const {data:c}=await supabase.from("connect_conversations").select("id").eq("id",theirs[0].conversation_id).maybeSingle();if(c){$("#sc-new-chat-form").classList.add("sc-hidden");return openConversation(c.id,person.display_name||person.username);}}}
   const {data:conv,error:convErr}=await supabase.from("connect_conversations").insert({created_by:session.user.id,is_group:false}).select("id").single();
   if(convErr) return toast(convErr.message);
-  const {error:memberErr}=await supabase.from("connect_conversation_members").insert([{conversation_id:conv.id,user_id:session.user.id,role:"owner"},{conversation_id:conv.id,user_id:person.user_id,role:"member"}]);
-  if(memberErr) { await supabase.from("connect_conversations").delete().eq("id",conv.id); return toast(memberErr.message); }
+  const {error:ownerErr}=await supabase.from("connect_conversation_members").insert({conversation_id:conv.id,user_id:session.user.id,role:"owner"});
+  if(ownerErr) { await supabase.from("connect_conversations").delete().eq("id",conv.id); return toast(ownerErr.message); }
+  const {error:memberErr}=await supabase.from("connect_conversation_members").insert({conversation_id:conv.id,user_id:person.user_id,role:"member"});
+  if(memberErr) { await supabase.from("connect_conversation_members").delete().eq("conversation_id",conv.id); await supabase.from("connect_conversations").delete().eq("id",conv.id); return toast(memberErr.message); }
   $("#sc-new-chat-form").classList.add("sc-hidden"); $("#sc-username").value=""; await loadConversations(); openConversation(conv.id,person.display_name||person.username);
 }
 async function openConversation(id,title) {
