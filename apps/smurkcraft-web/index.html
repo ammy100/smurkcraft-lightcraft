@@ -6,6 +6,7 @@
   <title>Smurkcraft</title>
   <link rel="icon" href="data:,">
   <meta name="description" content="Smurkcraft: open-source photo library and raw developer, running in your browser (WASM).">
+  <link rel="stylesheet" href="./connect.css">
   <style>
     :root { color-scheme: dark; }
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #1c1c1c; }
@@ -15,31 +16,24 @@
       overflow: hidden; background: #000; color: #b8b8b8;
       font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; pointer-events: none;
     }
-    #smurkcraft_loading img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
-    }
-    #smurkcraft_loading span {
-      position: absolute; bottom: 6%; text-shadow: 0 1px 6px #000;
-    }
+    #smurkcraft_loading img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    #smurkcraft_loading span { position: absolute; bottom: 6%; text-shadow: 0 1px 6px #000; }
     #smurkcraft_status { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; overflow: hidden; }
   </style>
 </head>
 <body>
   <canvas id="smurkcraft_canvas"></canvas>
   <div id="smurkcraft_loading">
-    <img src="./smurkcraft-splash.png" alt="SmurkHub" />
+    <img src="./smurkcraft-splash.png" alt="Smurkcraft" />
     <span>Loading Smurkcraft…</span>
   </div>
   <div id="smurkcraft_status" aria-live="polite"></div>
   <script type="module">
     import init, { start, command } from "./smurkcraft_web.js";
     (async () => {
-      // The Chinese font is a separate file: embedding it would exceed the host's WASM size limit.
-      // Font-free development builds can still run, with the same missing-glyph warning as before.
       const chineseFont = fetch("./lightcraft_zh_hans.otf")
         .then(async response => response.ok ? new Uint8Array(await response.arrayBuffer()) : new Uint8Array())
         .catch(() => new Uint8Array());
-      // Compile once; the render workers (worker.js) instantiate the same compiled module.
       const [module, font] = await Promise.all([
         WebAssembly.compileStreaming(fetch("./smurkcraft_web_bg.wasm")),
         chineseFont,
@@ -47,7 +41,6 @@
       globalThis.smurkcraftModule = module;
       globalThis.lightcraftModule = module;
       await init({ module_or_path: module });
-      // automation: `await smurkcraft.command("library.info", "{}")` → JSON text
       globalThis.smurkcraft = { command };
       globalThis.lightcraft = globalThis.smurkcraft;
       start(font);
@@ -57,5 +50,6 @@
       if (el) el.textContent = "Smurkcraft failed to load: " + e;
     });
   </script>
+  <script type="module" src="./connect.js"></script>
 </body>
 </html>
