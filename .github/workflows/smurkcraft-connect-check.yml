@@ -13,6 +13,7 @@ on:
       - "apps/smurkcraft-web/connect.js"
       - "apps/smurkcraft-web/connect.css"
       - "apps/smurkcraft-web/index.html"
+      - ".github/workflows/smurkcraft-connect-check.yml"
 
 permissions:
   contents: read
