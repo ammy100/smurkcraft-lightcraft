@@ -80,7 +80,7 @@ async function renderAuth() {
   const displayName=profile?.display_name||meta.display_name||meta.full_name||user.email?.split("@")[0]||"Creator";
   $("#sc-user-name").textContent=displayName; $("#sc-avatar").textContent=displayName.slice(0,1).toUpperCase();
   $("#sc-profile-username").value=profile?.username||"";
-  await supabase.from("connect_profiles").upsert({user_id:user.id,display_name:displayName,avatar_url:meta.avatar_url||meta.picture||null},{onConflict:"user_id"});
+  await supabase.from("connect_profiles").upsert({user_id:user.id,username:profile?.username||null,display_name:displayName,avatar_url:meta.avatar_url||meta.picture||profile?.avatar_url||null},{onConflict:"user_id"});
   await Promise.all([loadConversations(),loadAnnouncements()]);
   if(!realtime) realtime=supabase.channel("smurk-connect-global").on("postgres_changes",{event:"INSERT",schema:"public",table:"connect_messages"},payload=>{ if(activeConversation && payload.new.conversation_id===activeConversation) loadMessages(activeConversation); else loadConversations(); }).on("postgres_changes",{event:"INSERT",schema:"public",table:"connect_announcements"},()=>loadAnnouncements()).subscribe();
 }
