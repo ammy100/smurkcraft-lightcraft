@@ -148,8 +148,17 @@ async function loadAnnouncements() {
   if(!session)return; const box=$("#sc-announcements");
   const {data,error}=await supabase.from("connect_announcements").select("*").eq("published",true).order("published_at",{ascending:false}).limit(50);
   if(error) {box.innerHTML='<div class="sc-empty">Could not load updates.</div>';return;}
-  box.innerHTML=(data||[]).map(a=>`<article class="sc-announcement sc-${escapeHtml(a.severity)}"><small>${escapeHtml(a.severity.toUpperCase())} · ${date(a.published_at||a.created_at)}</small><h4>${escapeHtml(a.title)}</h4><p>${escapeHtml(a.body).replace(/\n/g,"<br>")}</p></article>`).join("")||'<div class="sc-empty"><span>✳</span><b>You're all caught up.</b><p>Product news and release notes will appear here.</p></div>';
-  $("#sc-update-dot").style.display=data?.length?"inline-block":"none";
+  const announcements=data||[];
+  const {data:receipts}=announcements.length?await supabase.from("connect_announcement_reads").select("announcement_id").eq("user_id",session.user.id).in("announcement_id",announcements.map(a=>a.id)):{data:[]};
+  const readIds=new Set((receipts||[]).map(r=>r.announcement_id));
+  const unread=announcements.filter(a=>!readIds.has(a.id));
+  $("#sc-update-dot").style.display=unread.length?"inline-block":"none";
+  $("#sc-update-dot").title=unread.length?unread.length+" unread updates":"";
+  box.innerHTML=announcements.map(a=>`<article class="sc-announcement sc-${escapeHtml(a.severity)} ${readIds.has(a.id)?"":"sc-unread"}"><small>${readIds.has(a.id)?"":"● NEW · "}${escapeHtml(a.severity.toUpperCase())} · ${date(a.published_at||a.created_at)}</small><h4>${escapeHtml(a.title)}</h4><p>${escapeHtml(a.body).replace(/\n/g,"<br>")}</p></article>`).join("")||'<div class="sc-empty"><span>✳</span><b>You're all caught up.</b><p>Product news and release notes will appear here.</p></div>';
+  if(activeTab==="updates" && unread.length) {
+    const {error:readError}=await supabase.from("connect_announcement_reads").upsert(unread.map(a=>({announcement_id:a.id,user_id:session.user.id})),{onConflict:"announcement_id,user_id",ignoreDuplicates:true});
+    if(!readError) { $("#sc-update-dot").style.display="none"; box.querySelectorAll(".sc-unread").forEach(el=>{el.classList.remove("sc-unread");const small=el.querySelector("small");if(small)small.textContent=small.textContent.replace("● NEW · ","");}); }
+  }
 }
 function localAssistant(text) {
   const t=text.toLowerCase();
