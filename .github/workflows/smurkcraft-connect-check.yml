@@ -1,0 +1,49 @@
+name: Smurkcraft Connect checks
+
+on:
+  pull_request:
+    paths:
+      - "apps/smurkcraft-web/connect.js"
+      - "apps/smurkcraft-web/connect.css"
+      - "apps/smurkcraft-web/index.html"
+      - "xtask/src/web.rs"
+      - ".github/workflows/smurkcraft-connect-check.yml"
+  push:
+    branches: ["feature/smurkcraft-connect"]
+    paths:
+      - "apps/smurkcraft-web/connect.js"
+      - "apps/smurkcraft-web/connect.css"
+      - "apps/smurkcraft-web/index.html"
+      - "xtask/src/web.rs"
+      - ".github/workflows/smurkcraft-connect-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  browser-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate Connect JavaScript syntax
+        run: node --input-type=module --check < apps/smurkcraft-web/connect.js
+      - name: Validate integration hooks
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'connect.css' apps/smurkcraft-web/index.html
+          grep -q 'connect.js' apps/smurkcraft-web/index.html
+          grep -q 'signInWithPassword' apps/smurkcraft-web/connect.js
+          grep -q 'signInWithOAuth' apps/smurkcraft-web/connect.js
+          grep -q 'connect_messages' apps/smurkcraft-web/connect.js
+          grep -q 'connect_announcements' apps/smurkcraft-web/connect.js
+          grep -q '"connect.js", "connect.css"' xtask/src/web.rs
+          if grep -Eq 'service_role|SUPABASE_SERVICE_ROLE_KEY' apps/smurkcraft-web/connect.js; then
+            echo "A service-role key or reference must never ship in browser code."
+            exit 1
+          fi

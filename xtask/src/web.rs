@@ -1,5 +1,5 @@
 //! `cargo xtask web`: build `apps/smurkcraft-web` for wasm32 and bundle it with `wasm-bindgen`
-//! into `<target>/web-site/` (index.html + worker.js + smurkcraft_web.js + smurkcraft_web_bg.wasm),
+//! into `<target>/web-site/` (index.html + worker.js + Connect assets + smurkcraft_web.js + smurkcraft_web_bg.wasm),
 //! with gzip and brotli precompressed copies (`*.gz`, `*.br`) next to each file.
 //! `--serve [port]` then serves that folder with a tiny static HTTP server (std only) that sends
 //! the cross-origin isolation headers (COOP/COEP) and the precompressed files when the browser
@@ -25,7 +25,7 @@ const CHINESE_FONT_LICENSE_FILE: &str = "OFL-noto-sans-cjk-sc.txt";
 const SPLASH_FILE: &str = "smurkcraft-splash.png";
 
 /// Files copied from `apps/smurkcraft-web/` into the bundle as they are.
-const STATIC_FILES: [&str; 2] = ["index.html", "worker.js"];
+const STATIC_FILES: [&str; 4] = ["index.html", "worker.js", "connect.js", "connect.css"];
 
 /// Bundle files that get precompressed copies.
 const COMPRESSED: [&str; 4] = ["index.html", "worker.js", "smurkcraft_web.js", "smurkcraft_web_bg.wasm"];
