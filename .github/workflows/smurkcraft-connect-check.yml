@@ -14,6 +14,7 @@ on:
       - "apps/smurkcraft-web/connect.js"
       - "apps/smurkcraft-web/connect.css"
       - "apps/smurkcraft-web/index.html"
+      - "xtask/src/web.rs"
       - ".github/workflows/smurkcraft-connect-check.yml"
 
 permissions:
